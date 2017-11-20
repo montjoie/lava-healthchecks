@@ -1,0 +1,70 @@
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/x86/x86_64_defconfig/
+  kernel.tree: mainline
+  kernel.version: v4.14-rc8
+  kernel.endian: little
+  kernel.defconfig: x86_64_defconfig
+  kernel.defconfig_base: x86_64_defconfig
+  kernel.arch_defconfig: x86-x86_64_defconfig
+  platform.dtb: qemu
+  platform.dtb_short: qemu
+  platform.fastboot: false
+  platform.name: qemu
+  platform.mach: qemu
+  test.plan: boot
+  git.commit: 569dbb88e80deb68974ef6fdd6a13edb9d686261
+  git.describe: v4.14-rc8
+  git.branch: master
+  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  device.type: qemu
+  job.arch: x86
+  job.name: mainline-master-v4.14-rc8-x86-x86_64_defconfig-qemu-qemu-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/x86/x86_64_defconfig/bzImage?raw=true
+  job.kernel_image: bzImage
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/x86/x86_64_defconfig/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/x86/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: None
+
+device_type: qemu
+
+job_name: mainline-master-v4.14-rc8-x86-x86_64_defconfig-qemu-qemu-boot
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 5
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+context:
+  arch: x86_64
+  cpu: qemu64
+
+actions:
+- deploy:
+    timeout:
+      minutes: 3
+    to: tmpfs
+    os: oe
+    images:
+      kernel:
+        image_arg: '-kernel {kernel} -append "console=ttyS0,115200 root=/dev/ram0 debug verbose"'
+        url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/x86/x86_64_defconfig/bzImage?raw=true
+      ramdisk:
+        image_arg: '-initrd {ramdisk}'
+        url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/x86/rootfs.cpio.gz?raw=true
+
+- boot:
+    timeout:
+      minutes: 5
+    method: qemu
+    media: tmpfs
+    prompts:
+      - 'linaro-test'
+      - 'root@debian:~#'
+      - '/ #'

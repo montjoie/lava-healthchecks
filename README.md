@@ -1,2 +1,2 @@
 # lava-healthchecks
-LAVA healthchecks
+Collection of healthchecks for LAVA labs.
