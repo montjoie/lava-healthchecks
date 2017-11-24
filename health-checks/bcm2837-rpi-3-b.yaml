@@ -3,9 +3,9 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/arm64/defconfig/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-13151-g5a787756b809//arm64/defconfig/
   kernel.tree: mainline
-  kernel.version: v4.14-rc8
+  kernel.version: v4.14-13151-g5a787756b809/
   kernel.endian: little
   kernel.defconfig: defconfig
   kernel.defconfig_base: defconfig
@@ -17,18 +17,18 @@ metadata:
   platform.mach: bcm
   test.plan: boot
   git.commit: 569dbb88e80deb68974ef6fdd6a13edb9d686261
-  git.describe: v4.14-rc8
+  git.describe: v4.14-13151-g5a787756b809/
   git.branch: master
   git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
   device.type: bcm2837-rpi-3-b
   job.arch: arm64
-  job.name: mainline-master-v4.14-rc8-arm64-defconfig-bcm2837-rpi-3-b.dtb-bcm2837-rpi-3-b-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/arm64/defconfig/Image?raw=true
+  job.name: mainline-master-v4.14-13151-g5a787756b809/-arm64-defconfig-bcm2837-rpi-3-b.dtb-bcm2837-rpi-3-b-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-13151-g5a787756b809//arm64/defconfig/Image?raw=true
   job.kernel_image: Image?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/arm64/defconfig/modules.tar.xz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-13151-g5a787756b809//arm64/defconfig/modules.tar.xz?raw=true
   job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/arm64/defconfig/dtbs/broadcom/bcm2837-rpi-3-b.dtb?raw=true
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-13151-g5a787756b809//arm64/defconfig/dtbs/broadcom/bcm2837-rpi-3-b.dtb?raw=true
 
 
 
@@ -49,7 +49,7 @@ notify:
     content-type: json
 
 
-job_name: mainline-master-v4.14-rc8-arm64-defconfig-bcm2837-rpi-3-b.dtb-bcm2837-rpi-3-b-boot
+job_name: mainline-master-v4.14-13151-g5a787756b809/-arm64-defconfig-bcm2837-rpi-3-b.dtb-bcm2837-rpi-3-b-boot
 timeouts:
   job:
     minutes: 10
@@ -71,16 +71,16 @@ actions:
       minutes: 2
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/arm64/defconfig/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-13151-g5a787756b809//arm64/defconfig/Image?raw=true
       type: image
     ramdisk:
       url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/arm64/defconfig/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-13151-g5a787756b809//arm64/defconfig/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/arm64/defconfig/dtbs/broadcom/bcm2837-rpi-3-b.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-13151-g5a787756b809//arm64/defconfig/dtbs/broadcom/bcm2837-rpi-3-b.dtb?raw=true
     os: oe
 
 
