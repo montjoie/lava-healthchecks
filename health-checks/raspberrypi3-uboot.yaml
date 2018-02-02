@@ -1,0 +1,89 @@
+metadata:
+  git.branch: agl-branch
+  image.type: AGL
+  job.arch: arm
+  job.name: AGL-short-smoke-wip
+  kernel.tree: AGL-kernel-tree
+  kernel.version: AGL-kernel-version
+  kernel.defconfig_base: defconfig
+  kernel.defconfig: defconfig+CONFIG_AGL=y
+  platform.mach: broadcom
+  platform.name: raspberrypi3-uboot
+  vcs.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/AGL/release/dab/4.0.2/raspberrypi3/deploy/images/raspberrypi3/
+
+device_type: raspberrypi3-uboot
+job_name: AGL-short-smoke-wip
+
+timeouts:
+  job:
+    minutes: 30
+  action:
+    minutes: 15
+  connection:
+    minutes: 5
+priority: medium
+visibility: public
+
+protocols:
+  lava-xnbd:
+    port: auto
+
+actions:
+- deploy:
+    timeout:
+      minutes: 15
+    to: nbd
+    os: oe
+    failure_retry: 2
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/AGL/release/dab/4.0.2/raspberrypi3/deploy/images/raspberrypi3/uImage?raw=true
+    initrd:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/AGL/release/dab/4.0.2/raspberrypi3/deploy/images/raspberrypi3/initramfs-netboot-image-raspberrypi3.ext4.gz.u-boot
+      allow_modify: false
+    nbdroot:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/AGL/release/dab/4.0.2/raspberrypi3/deploy/images/raspberrypi3/agl-demo-platform-raspberrypi3.ext4.xz
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/AGL/release/dab/4.0.2/raspberrypi3/deploy/images/raspberrypi3/uImage-bcm2710-rpi-3-b.dtb?raw=true
+
+- boot:
+    timeout:
+      minutes: 10
+    method: u-boot
+    prompts:
+      - "root@raspberrypi3:~"
+      - "raspberrypi3:~#"
+      - '/ #'
+
+    auto_login:
+      login_prompt: "login:"
+      username: root
+    commands: nbd
+    type: bootm
+    transfer_overlay:
+      download_command: wget
+      unpack_command: tar -C / -xvpf
+- test:
+    timeout:
+      minutes: 2
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: inline-test
+          description: "Inline test to validate test framewrok health"
+          os:
+          - debian
+          scope:
+          - functional
+        run:
+          steps:
+          - lava-test-set start set-pass
+          - lava-test-case always-pass --shell true
+          - lava-test-set stop set-pass
+          - lava-test-set start set-fail
+          - lava-test-case always-fail --shell false
+          - lava-test-set stop set-fail
+      from: inline
+      name: health-test
+      path: inline/health-test.yaml
