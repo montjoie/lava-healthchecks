@@ -1,8 +1,8 @@
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/x86/x86_64_defconfig/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/x86/x86_64_defconfig/
   kernel.tree: mainline
-  kernel.version: v4.14-rc8
+  kernel.version: v4.15
   kernel.endian: little
   kernel.defconfig: x86_64_defconfig
   kernel.defconfig_base: x86_64_defconfig
@@ -14,22 +14,22 @@ metadata:
   platform.mach: qemu
   test.plan: boot
   git.commit: 569dbb88e80deb68974ef6fdd6a13edb9d686261
-  git.describe: v4.14-rc8
+  git.describe: v4.15
   git.branch: master
   git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
   device.type: qemu
   job.arch: x86
-  job.name: mainline-master-v4.14-rc8-x86-x86_64_defconfig-qemu-qemu-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/x86/x86_64_defconfig/bzImage?raw=true
+  job.name: mainline-master-v4.15-x86-x86_64_defconfig-qemu-qemu-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/x86/x86_64_defconfig/bzImage?raw=true
   job.kernel_image: bzImage
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/x86/x86_64_defconfig/modules.tar.xz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/x86/x86_64_defconfig/modules.tar.xz?raw=true
   job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/x86/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
   job.dtb_url: None
 
 device_type: qemu
 
-job_name: mainline-master-v4.14-rc8-x86-x86_64_defconfig-qemu-qemu-boot
+job_name: mainline-master-v4.15-x86-x86_64_defconfig-qemu-qemu-boot
 timeouts:
   job:
     minutes: 10
@@ -54,7 +54,7 @@ actions:
     images:
       kernel:
         image_arg: '-kernel {kernel} -append "console=ttyS0,115200 root=/dev/ram0 debug verbose"'
-        url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.14-rc8/x86/x86_64_defconfig/bzImage?raw=true
+        url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/x86/x86_64_defconfig/bzImage?raw=true
       ramdisk:
         image_arg: '-initrd {ramdisk}'
         url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/x86/rootfs.cpio.gz?raw=true
