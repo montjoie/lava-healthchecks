@@ -1,8 +1,8 @@
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15-rc8/arm/bcm2835_defconfig/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm/bcm2835_defconfig/
   kernel.tree: mainline
-  kernel.version: v4.15-rc8
+  kernel.version: v4.15
   kernel.endian: little
   kernel.defconfig: bcm2835_defconfig
   kernel.defconfig_base: bcm2835_defconfig
@@ -14,18 +14,18 @@ metadata:
   platform.mach: bcm
   test.plan: boot
   git.commit: a8750ddca918032d6349adbf9a4b6555e7db20da
-  git.describe: v4.15-rc8
+  git.describe: v4.15
   git.branch: master
   git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
   device.type: bcm2837-rpi-3-b-32
   job.arch: arm
-  job.name: mainline-master-v4.15-rc8-arm-bcm2835_defconfig-bcm2837-rpi-3-b.dtb-bcm2837-rpi-3-b-32-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15-rc8/arm/bcm2835_defconfig/zImage?raw=true
+  job.name: mainline-master-v4.15-arm-bcm2835_defconfig-bcm2837-rpi-3-b.dtb-bcm2837-rpi-3-b-32-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm/bcm2835_defconfig/zImage?raw=true
   job.kernel_image: zImage?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15-rc8/arm/bcm2835_defconfig/modules.tar.xz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm/bcm2835_defconfig/modules.tar.xz?raw=true
   job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15-rc8/arm/bcm2835_defconfig/dtbs/bcm2837-rpi-3-b.dtb?raw=true
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm/bcm2835_defconfig/dtbs/bcm2837-rpi-3-b.dtb?raw=true
 
 device_type: bcm2837-rpi-3-b-32
 
@@ -33,7 +33,7 @@ context:
   test_character_delay: "10"
   console_device: "ttyS1"
 
-job_name: mainline-master-v4.15-rc8-arm-bcm2835_defconfig-bcm2837-rpi-3-b.dtb-bcm2837-rpi-3-b-32-boot
+job_name: mainline-master-v4.15-arm-bcm2835_defconfig-bcm2837-rpi-3-b.dtb-bcm2837-rpi-3-b-32-boot
 timeouts:
   job:
     minutes: 10
@@ -51,16 +51,16 @@ actions:
       minutes: 2
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15-rc8/arm/bcm2835_defconfig/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm/bcm2835_defconfig/zImage?raw=true
       type: zimage
     ramdisk:
       url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15-rc8/arm/bcm2835_defconfig/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm/bcm2835_defconfig/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15-rc8/arm/bcm2835_defconfig/dtbs/bcm2837-rpi-3-b.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm/bcm2835_defconfig/dtbs/bcm2837-rpi-3-b.dtb?raw=true
     os: oe
 
 - boot:
