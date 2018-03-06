@@ -1,0 +1,74 @@
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16-rc4/arm/sunxi_defconfig/
+  kernel.tree: mainline
+  kernel.version: v4.16-rc4
+  kernel.endian: little
+  kernel.defconfig: sunxi_defconfig
+  kernel.defconfig_base: sunxi_defconfig
+  kernel.arch_defconfig: arm-sunxi_defconfig
+  platform.dtb: sun8i-h2-plus-orangepi-r1.dtb?raw=true
+  platform.dtb_short: sun8i-h2-plus-orangepi-r1.dtb?raw=true
+  platform.fastboot: false
+  platform.name: sun8i-h2-plus-orangepi-r1
+  platform.mach: sunxi
+  test.plan: boot
+  git.commit: 661e50bc853209e41a5c14a290ca4decc43cbfd1
+  git.describe: v4.16-rc4
+  git.branch: master
+  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  device.type: sun8i-h2-plus-orangepi-r1
+  job.arch: arm
+  job.name: mainline-master-v4.16-rc4-arm-sunxi_defconfig-sun8i-h2-plus-orangepi-r1.dtb-sun8i-h2-plus-orangepi-r1-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16-rc4/arm/sunxi_defconfig/zImage?raw=true
+  job.kernel_image: zImage?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16-rc4/arm/sunxi_defconfig/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16-rc4/arm/sunxi_defconfig/dtbs/sun8i-h2-plus-orangepi-r1.dtb?raw=true
+
+device_type: sun8i-h2-plus-orangepi-r1
+
+notify:
+  criteria:
+    status: finished
+
+job_name: mainline-master-v4.16-rc4-arm-sunxi_defconfig-sun8i-h2-plus-orangepi-r1.dtb-sun8i-h2-plus-orangepi-r1-boot
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+actions:
+- deploy:
+    timeout:
+      minutes: 2
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16-rc4/arm/sunxi_defconfig/zImage?raw=true
+      type: zimage
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16-rc4/arm/sunxi_defconfig/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16-rc4/arm/sunxi_defconfig/dtbs/sun8i-h2-plus-orangepi-r1.dtb?raw=true
+    os: oe
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - 'linaro-test'
+      - 'root@debian:~#'
+      - '/ #'
