@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#update $1 to version $2
+
+if [ ! -e "$1" ];then
+	exit 0
+fi
+
+if [ -z "$2" ];then
+	exit 1
+fi
+
+#check for v in $2
+
+OLDKERNELVERSION=$(grep kernel.version: $1 | sed 's,.*[[:space:]],,')
+
+echo "Upgrading from $OLDKERNELVERSION to $2"
+
+sed -i "s,$OLDKERNELVERSION,$2," $1
+
+grep 'github.com.*raw=true' $1 | sed 's,^.*https,https,' | sed 's,?raw=true,,'| sed 's,github.com/montjoie/lava-healthchecks-binary/blob/master,storage.kernelci.org,' |
+while read line
+do
+	IPATH=$(dirname $line | sed 's,^https://[a-z0-9\.]*/,,')
+	echo "IPATH is $IPATH"
+	OLDPATH=$(pwd)
+	mkdir -pv ../lava-healthchecks-binary/$IPATH
+	cd ../lava-healthchecks-binary/$IPATH
+	wget -N $line
+	cd $OLDPATH
+done
