@@ -36,12 +36,6 @@ context:
 notify:
   criteria:
     status: finished
-  callback:
-    url: http://10.1.3.145:8081/callback/lava/test?lab_name=lab-baylibre-legacy&status={STATUS}&status_string={STATUS_STRING}
-    method: POST
-    dataset: all
-    token: lab-baylibre-legacy-callback-baylibre
-    content-type: json
 
 job_name: mainline-master-v4.15-arm64-defconfig-bcm2837-rpi-3-b.dtb-bcm2837-rpi-3-b-boot
 timeouts:

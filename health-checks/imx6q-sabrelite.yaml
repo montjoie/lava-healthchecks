@@ -1,6 +1,3 @@
-
-
-
 metadata:
   image.type: 'kernel-ci'
   image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.14-rc8/arm/multi_v7_defconfig/
@@ -30,24 +27,11 @@ metadata:
   job.nfsrootfs_url: None
   job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.14-rc8/arm/multi_v7_defconfig/dtbs/imx6q-sabrelite.dtb?raw=true
 
-
-
-
-
-
 device_type: imx6q-sabrelite
-
 
 notify:
   criteria:
     status: finished
-  callback:
-    url: http://api.dev.baylibre.com/callback/lava/boot?lab_name=lab-baylibre-enuc&status={STATUS}&status_string={STATUS_STRING}
-    method: POST
-    dataset: all
-    token: 696840d8-47e2-4c03-8db8-91d8c4afd37e
-    content-type: json
-
 
 job_name: mainline-master-v4.14-rc8-arm-multi_v7_defconfig-imx6q-sabrelite.dtb-imx6q-sabrelite-boot
 timeouts:
@@ -60,10 +44,6 @@ timeouts:
       seconds: 30
 priority: high
 visibility: public
-
-
-
-
 
 actions:
 - deploy:
@@ -82,7 +62,6 @@ actions:
     dtb:
       url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.14-rc8/arm/multi_v7_defconfig/dtbs/imx6q-sabrelite.dtb?raw=true
     os: oe
-
 
 - boot:
     timeout:
