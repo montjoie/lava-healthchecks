@@ -1,0 +1,76 @@
+#!/bin/sh
+
+# convert LAVA-CI jobs to be hosted on lava-healtchek
+
+if [ -z "$1" ];then
+	echo "Usage: $0 job to convert"
+	exit 1
+fi
+
+if [ ! -e "$1" ];then
+	echo "Cannot find $1"
+	exit 1
+fi
+
+if [ ! -e ../lava-healthchecks-binary ];then
+	echo "lava-healthchecks-binary must be checkouted on the same parent directory than lava-healthchecks"
+	exit 1
+fi
+
+BASEPATH=$(dirname $0)
+
+grep download.automotivelinux.org $1 |grep -iE 'url' |\
+	grep -v '/$' |\
+	sed 's,^.*http,http,' |\
+	sort | uniq |
+while read line
+do
+	echo "DEBUG: $line"
+	IPATH=$(dirname $line | sed 's,^https://[a-z0-9\.]*/,,')
+	echo $IPATH
+	mkdir -pv ../lava-healthchecks-binary/$BASEPATH/$IPATH
+	OLDPATH=$(pwd)
+	cd ../lava-healthchecks-binary/$BASEPATH/$IPATH
+	wget -N $line
+	cd $OLDPATH
+	sed -i 's,download.automotivelinux.org,github.com/montjoie/lava-healthchecks-binary/blob/master,' $1
+done
+
+grep storage.kernelci.org $1 |grep -iE 'url' |\
+	grep -v '/$' |\
+	sed 's,^.*http,http,' |\
+	sort | uniq |
+while read line
+do
+	IPATH=$(dirname $line | sed 's,^http://[a-z0-9\.]*/,,')
+	echo $IPATH
+	mkdir -pv ../lava-healthchecks-binary/$BASEPATH/$IPATH
+	OLDPATH=$(pwd)
+	cd ../lava-healthchecks-binary/$BASEPATH/$IPATH
+	wget -N $line
+	cd $OLDPATH
+done
+
+grep github.com/montjoie $1 |grep -iE 'url' |\
+	grep -v '/$' |\
+	sed 's,^.*http,http,' |\
+	sed 's,https://github.com/montjoie/lava-healthchecks-binary/blob/master/,https://storage.kernelci.org/,' |\
+	sed 's,?raw=true,,' |\
+	sort | uniq |
+while read line
+do
+	IPATH=$(dirname $line | sed 's,^https://[a-z0-9\.]*/,,')
+	echo "IPATH is $IPATH"
+	mkdir -pv ../lava-healthchecks-binary/$BASEPATH/$IPATH
+	OLDPATH=$(pwd)
+	cd ../lava-healthchecks-binary/$BASEPATH/$IPATH
+	wget -N $line
+	cd $OLDPATH
+done
+sed -i 's,storage.kernelci.org,github.com/montjoie/lava-healthchecks-binary/blob/master,' $1
+sed -i 's,rootfs.cpio.gz$,rootfs.cpio.gz?raw=true,' $1
+sed -i 's,dtb$,dtb?raw=true,' $1
+sed -i 's,Image$,Image?raw=true,' $1
+sed -i 's,modules.tar.xz$,modules.tar.xz?raw=true,' $1
+sed -i 's,http://github.com,https://github.com,' $1
+
