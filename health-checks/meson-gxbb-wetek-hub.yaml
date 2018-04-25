@@ -1,35 +1,35 @@
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.17-rc1/arm64/defconfig/
   kernel.tree: mainline
-  kernel.version: v4.16
+  kernel.version: v4.17-rc1
   kernel.endian: little
   kernel.defconfig: defconfig
   kernel.defconfig_base: defconfig
   kernel.arch_defconfig: arm64-defconfig
-  platform.dtb: amlogic/meson-gxbb-wetek-hub.dtb?raw=true
-  platform.dtb_short: meson-gxbb-wetek-hub.dtb?raw=true
+  platform.dtb: amlogic/meson-gxbb-wetek-hub.dtb
+  platform.dtb_short: meson-gxbb-wetek-hub.dtb
   platform.fastboot: true
   platform.name: meson-gxbb-wetek-hub
   platform.mach: amlogic
   test.plan: boot
   git.commit: d8a5b80568a9cb66810e75b182018e9edb68e8ff
-  git.describe: v4.16
+  git.describe: v4.17-rc1
   git.branch: master
   git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
   device.type: meson-gxbb-wetek-hub
   job.arch: arm64
-  job.name: mainline-master-v4.16-arm64-defconfig-meson-gxbb-wetek-hub.dtb-meson-gxbb-wetek-hub-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/Image?raw=true
-  job.kernel_image: Image?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/modules.tar.xz?raw=true
+  job.name: mainline-master-v4.17-rc1-arm64-defconfig-meson-gxbb-wetek-hub.dtb-meson-gxbb-wetek-hub-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.17-rc1/arm64/defconfig/Image?raw=true
+  job.kernel_image: Image
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.17-rc1/arm64/defconfig/modules.tar.xz?raw=true
   job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/dtbs/amlogic/meson-gxbb-wetek-hub.dtb?raw=true
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.17-rc1/arm64/defconfig/dtbs/amlogic/meson-gxbb-wetek-hub.dtb?raw=true
 
 device_type: meson-gxbb-wetek-hub
 
-job_name: mainline-master-v4.16-arm64-defconfig-meson-gxbb-wetek-hub.dtb-meson-gxbb-wetek-hub-boot
+job_name: mainline-master-v4.17-rc1-arm64-defconfig-meson-gxbb-wetek-hub.dtb-meson-gxbb-wetek-hub-boot
 timeouts:
   job:
     minutes: 10
@@ -47,16 +47,16 @@ actions:
       minutes: 2
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.17-rc1/arm64/defconfig/Image?raw=true
       type: image
     ramdisk:
       url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.17-rc1/arm64/defconfig/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/dtbs/amlogic/meson-gxbb-wetek-hub.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.17-rc1/arm64/defconfig/dtbs/amlogic/meson-gxbb-wetek-hub.dtb?raw=true
     os: oe
 
 - boot:
