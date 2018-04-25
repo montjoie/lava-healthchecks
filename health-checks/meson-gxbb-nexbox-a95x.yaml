@@ -1,0 +1,70 @@
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/
+  kernel.tree: mainline
+  kernel.version: v4.16
+  kernel.endian: little
+  kernel.defconfig: defconfig
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: arm64-defconfig
+  platform.dtb: amlogic/meson-gxbb-nexbox-a95x.dtb
+  platform.dtb_short: meson-gxbb-nexbox-a95x.dtb
+  platform.fastboot: false
+  platform.name: meson-gxbb-nexbox-a95x
+  platform.mach: amlogic
+  test.plan: boot
+  git.commit: 569dbb88e80deb68974ef6fdd6a13edb9d686261
+  git.describe: v4.16
+  git.branch: master
+  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  device.type: meson-gxbb-nexbox-a95x
+  job.arch: arm64
+  job.name: mainline-master-v4.16-arm64-defconfig-meson-gxbb-nexbox-a95x.dtb-meson-gxbb-p200-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/Image?raw=true
+  job.kernel_image: Image
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/dtbs/amlogic/meson-gxbb-nexbox-a95x.dtb?raw=true
+
+device_type: meson-gxbb-nexbox-a95x
+
+job_name: mainline-master-v4.16-arm64-defconfig-meson-gxbb-nexbox-a95x.dtb-meson-gxbb-p200-boot
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 5
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+actions:
+- deploy:
+    timeout:
+      minutes: 2
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/Image?raw=true
+      type: image
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/dtbs/amlogic/meson-gxbb-nexbox-a95x.dtb?raw=true
+    os: oe
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - 'linaro-test'
+      - 'root@debian:~#'
+      - '/ #'
