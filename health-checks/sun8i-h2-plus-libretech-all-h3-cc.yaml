@@ -1,8 +1,8 @@
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180430/arm/sunxi_defconfig/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180511/arm/sunxi_defconfig/
   kernel.tree: mainline
-  kernel.version: next-20180430
+  kernel.version: next-20180511
   kernel.endian: little
   kernel.defconfig: sunxi_defconfig
   kernel.defconfig_base: sunxi_defconfig
@@ -14,18 +14,18 @@ metadata:
   platform.mach: sunxi
   test.plan: boot
   git.commit: 661e50bc853209e41a5c14a290ca4decc43cbfd1
-  git.describe: next-20180430
+  git.describe: next-20180511
   git.branch: master
   git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
   device.type: sun8i-h2-plus-libretech-all-h3-cc
   job.arch: arm
-  job.name: mainline-master-next-20180430-arm-sunxi_defconfig-sun8i-h2-plus-libretech-all-h3-cc.dtb-sun8i-h2-plus-orangepi-zero-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180430/arm/sunxi_defconfig/zImage?raw=true
+  job.name: mainline-master-next-20180511-arm-sunxi_defconfig-sun8i-h2-plus-libretech-all-h3-cc.dtb-sun8i-h2-plus-orangepi-zero-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180511/arm/sunxi_defconfig/zImage?raw=true
   job.kernel_image: zImage
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180430/arm/sunxi_defconfig/modules.tar.xz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180511/arm/sunxi_defconfig/modules.tar.xz?raw=true
   job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180430/arm/sunxi_defconfig/dtbs/sun8i-h2-plus-libretech-all-h3-cc.dtb?raw=true
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180511/arm/sunxi_defconfig/dtbs/sun8i-h2-plus-libretech-all-h3-cc.dtb?raw=true
 
 device_type: sun8i-h2-plus-libretech-all-h3-cc
 
@@ -33,7 +33,7 @@ notify:
   criteria:
     status: finished
 
-job_name: mainline-master-next-20180430-arm-sunxi_defconfig-sun8i-h2-plus-libretech-all-h3-cc.dtb-sun8i-h2-plus-orangepi-zero-boot
+job_name: mainline-master-next-20180511-arm-sunxi_defconfig-sun8i-h2-plus-libretech-all-h3-cc.dtb-sun8i-h2-plus-orangepi-zero-boot
 timeouts:
   job:
     minutes: 10
@@ -51,16 +51,16 @@ actions:
       minutes: 2
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180430/arm/sunxi_defconfig/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180511/arm/sunxi_defconfig/zImage?raw=true
       type: zimage
     ramdisk:
       url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180430/arm/sunxi_defconfig/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180511/arm/sunxi_defconfig/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180430/arm/sunxi_defconfig/dtbs/sun8i-h2-plus-libretech-all-h3-cc.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20180511/arm/sunxi_defconfig/dtbs/sun8i-h2-plus-libretech-all-h3-cc.dtb?raw=true
     os: oe
 
 - boot:
