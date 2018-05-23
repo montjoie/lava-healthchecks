@@ -14,9 +14,11 @@ fi
 
 OLDKERNELVERSION=$(grep kernel.version: $1 | sed 's,.*[[:space:]],,')
 
-echo "Upgrading from $OLDKERNELVERSION to $2"
+if [ "$2" != "download" ];then
+	echo "Upgrading from $OLDKERNELVERSION to $2"
 
-sed -i "s,$OLDKERNELVERSION,$2," $1
+	sed -i "s,$OLDKERNELVERSION,$2," $1
+fi
 
 grep 'github.com.*raw=true' $1 | sed 's,^.*https,https,' | sed 's,?raw=true,,'| sed 's,github.com/montjoie/lava-healthchecks-binary/blob/master,storage.kernelci.org,' |
 while read line
