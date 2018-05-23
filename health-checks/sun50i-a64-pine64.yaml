@@ -1,0 +1,74 @@
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.17-rc6/arm64/defconfig/
+  kernel.tree: mainline
+  kernel.version: v4.17-rc6
+  kernel.endian: little
+  kernel.defconfig: defconfig
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: arm64-defconfig
+  platform.dtb: sun50i-a64-pine64.dtb
+  platform.dtb_short: sun50i-a64-pine64.dtb
+  platform.fastboot: false
+  platform.name: sun50i-a64-pine64
+  platform.mach: sunxi
+  test.plan: boot
+  git.commit: 661e50bc853209e41a5c14a290ca4decc43cbfd1
+  git.describe: v4.17-rc6
+  git.branch: master
+  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  device.type: sun50i-a64-pine64
+  job.arch: arm64
+  job.name: mainline-master-v4.17-rc6-arm64-defconfig-sun50i-a64-pine64.dtb-sun8i-h2-plus-orangepi-zero-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.17-rc6/arm64/defconfig/Image?raw=true
+  job.kernel_image: Image
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.17-rc6/arm64/defconfig/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.17-rc6/arm64/defconfig/dtbs/allwinner/sun50i-a64-pine64.dtb?raw=true
+
+device_type: sun50i-a64-pine64
+
+notify:
+  criteria:
+    status: finished
+
+job_name: mainline-master-v4.17-rc6-arm64-defconfig-sun50i-a64-pine64.dtb-sun8i-h2-plus-orangepi-zero-boot
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+actions:
+- deploy:
+    timeout:
+      minutes: 2
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.17-rc6/arm64/defconfig/Image?raw=true
+      type: image
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.17-rc6/arm64/defconfig/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.17-rc6/arm64/defconfig/dtbs/allwinner/sun50i-a64-pine64.dtb?raw=true
+    os: oe
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - 'linaro-test'
+      - 'root@debian:~#'
+      - '/ #'
