@@ -1,0 +1,52 @@
+#!/bin/bash
+
+if [ $# -le 2 ];then
+	exit 1
+fi
+
+rm index.html
+wget -q https://storage.kernelci.org/stable/linux-4.17.y/ || exit $?
+LATEST=$(grep -oE 'v4.[0-9][0-9]*(\.[0-9][0-9]*)*' index.html | sort -V | uniq | tail -n1)
+
+echo "Latest is $LATEST"
+
+
+__DEVTYPE__="$1"
+__ARCH__=$2
+__DTB__=$3
+
+if [ -e /usr/src/linux ];then
+	if [ ! -e "/usr/src/linux/arch/$__ARCH__" ];then
+		exit 1
+	fi
+	echo "$__ARCH__ exists"
+	DTS=$(echo $__DTB__ | sed 's,dtb,dts,')
+	if [ ! -e "/usr/src/linux/arch/$__ARCH__/boot/dts/$DTS" ];then
+		exit 1
+	fi
+	echo "$DTS exists"
+else
+	echo "SKIP: test with /usr/src/linux"
+fi
+
+
+FINAL=health-checks/${__DEVTYPE__}.yaml
+cp health-checks/template.yaml $FINAL || exit $?
+sed -i "s,__DEVTYPE__,$__DEVTYPE__,g" $FINAL || exit $?
+sed -i "s,__ARCH__,$__ARCH__,g" $FINAL || exit $?
+sed -i "s,__DTB__,$__DTB__,g" $FINAL || exit $?
+sed -i "s,__KV__,$LATEST,g" $FINAL || exit $?
+
+case $__ARCH__ in
+arm)
+	sed -i 's,arm/defconfig,arm/multi_v7_defconfig,' $FINAL
+	sed -i 's,image,zimage,' $FINAL
+	sed -i 's,Image,zImage,' $FINAL
+;;
+*)
+	echo "No hack for $__ARCH__"
+;;
+esac
+
+./update_to $FINAL $LATEST $LATEST
+
