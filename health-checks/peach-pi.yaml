@@ -1,0 +1,40 @@
+device_type: peach-pi
+
+job_name: Health test for peach-pi with v4.17.14
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 5
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+actions:
+- deploy:
+    timeout:
+      minutes: 2
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.17.y/v4.17.14/arm/multi_v7_defconfig/zImage?raw=true
+      type: zimage
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.17.y/v4.17.14/arm/multi_v7_defconfig/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.17.y/v4.17.14/arm/multi_v7_defconfig/dtbs/exynos5800-peach-pi.dtb?raw=true
+    os: oe
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - 'root@debian:~#'
+      - '/ #'
