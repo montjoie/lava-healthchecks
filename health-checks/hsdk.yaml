@@ -1,0 +1,37 @@
+device_type: hsdk
+
+job_name: Health test for hsdk with v4.18.16
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 5
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+actions:
+- deploy:
+    timeout:
+      minutes: 2
+    to: tftp
+    kernel:
+      url: https://github.com/foss-for-synopsys-dwc-arc-processors/buildroot/releases/download/arc-2017.11-hsdk-release/uImage
+    ramdisk:
+      url: https://storage.kernelci.org/images/rootfs/buildroot/kci-2018.05/arc/base/rootfs.cpio.gz
+      compression: gz
+    dtb:
+      url: https://github.com/foss-for-synopsys-dwc-arc-processors/buildroot/releases/download/arc-2017.11-hsdk-release/hsdk.dtb
+    os: oe
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    type: bootm
+    prompts:
+      - 'root@debian:~#'
+      - '/ #'
