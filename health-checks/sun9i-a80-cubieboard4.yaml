@@ -1,0 +1,40 @@
+device_type: sun9i-a80-cubieboard4
+
+job_name: Health test for sun9i-a80-cubieboard4 with v4.20.8
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 5
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+actions:
+- deploy:
+    timeout:
+      minutes: 2
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.20.y/v4.20.8/arm/multi_v7_defconfig/gcc-7/zImage?raw=true
+      type: zimage
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.20.y/v4.20.8/arm/multi_v7_defconfig/gcc-7/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.20.y/v4.20.8/arm/multi_v7_defconfig/gcc-7/dtbs/sun9i-a80-cubieboard4.dtb?raw=true
+    os: oe
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - 'root@debian:~#'
+      - '/ #'
