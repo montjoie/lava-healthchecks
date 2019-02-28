@@ -1,0 +1,40 @@
+device_type: sun50i-h6-pine-h64
+
+job_name: Health test for sun50i-h6-pine-h64 with v4.20.8
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 5
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+actions:
+- deploy:
+    timeout:
+      minutes: 2
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.20.y/v4.20.8/arm64/defconfig/gcc-7/Image?raw=true
+      type: image
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob//master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.20.y/v4.20.8/arm64/defconfig/gcc-7/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.20.y/v4.20.8/arm64/defconfig/gcc-7/dtbs/allwinner/sun50i-h6-pine-h64.dtb?raw=true
+    os: oe
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - 'root@debian:~#'
+      - '/ #'
