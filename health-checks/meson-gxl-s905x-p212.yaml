@@ -1,0 +1,82 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm64/defconfig/gcc-7/
+  kernel.tree: stable
+  kernel.version: v5.0.5
+  kernel.endian: little
+  kernel.defconfig/gcc-7: defconfig
+  kernel.defconfig/gcc-7_base: defconfig
+  kernel.arch_defconfig/gcc-7: arm64-defconfig
+  platform.dtb: amlogic/meson-gxl-s905x-p212.dtb?raw=true
+  platform.dtb_short: meson-gxl-s905x-p212.dtb?raw=true
+  platform.fastboot: false
+  platform.name: meson-gxl-s905x-p212
+  platform.mach: amlogic
+  test.plan: boot
+  git.commit: 1f6f316a537d4310747b08f89fb32565317b288b
+  git.describe: v5.0.5
+  git.branch: linux-5.0.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  device.type: meson-gxl-s905x-p212
+  job.arch: arm64
+  job.name: stable-linux-5.0.y-v5.0.5-arm64-defconfig/gcc-7-meson-gxl-s905x-p212.dtb-meson-gxl-s905x-p212-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm64/defconfig/gcc-7/Image?raw=true
+  job.kernel_image: Image?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm64/defconfig/gcc-7/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.05/arm64/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm64/defconfig/gcc-7/dtbs/amlogic/meson-gxl-s905x-p212.dtb?raw=true
+
+
+
+
+
+device_type: meson-gxl-s905x-p212
+
+
+
+job_name: Health Check for meson-gxl-s905x-p212 with v5.0.5
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 2
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm64/defconfig/gcc-7/Image?raw=true
+      type: image
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.05/arm64/base/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm64/defconfig/gcc-7/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm64/defconfig/gcc-7/dtbs/amlogic/meson-gxl-s905x-p212.dtb?raw=true
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - '/ #'
