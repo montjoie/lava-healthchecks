@@ -1,0 +1,80 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/x86_64/x86_64_defconfig/gcc-7/
+  kernel.tree: stable
+  kernel.version: v5.0.5
+  kernel.endian: little
+  kernel.defconfig/gcc-7: x86_64_defconfig
+  kernel.defconfig/gcc-7_base: x86_64_defconfig
+  kernel.arch_defconfig/gcc-7: x86_64-x86_64_defconfig
+  platform.dtb: None
+  platform.dtb_short: None
+  platform.fastboot: false
+  platform.name: minnowboard-turbot-E3826
+  platform.mach: x86_64
+  test.plan: boot
+  git.commit: 1f6f316a537d4310747b08f89fb32565317b288b
+  git.describe: v5.0.5
+  git.branch: linux-5.0.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  device.type: minnowboard-turbot-E3826
+  job.arch: x86_64
+  job.name: stable-linux-5.0.y-v5.0.5-x86_64-x86_64_defconfig/gcc-7-no-dtb-minnowboard-turbot-E3826-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/x86_64/x86_64_defconfig/gcc-7/bzImage?raw=true
+  job.kernel_image: bzImage?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/x86_64/x86_64_defconfig/gcc-7/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.05/x86_64/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: None
+
+
+
+
+
+device_type: minnowboard-turbot-E3826
+
+
+
+job_name: Health Check for minnowboard-turbot-E3826 with v5.0.5
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 2
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/x86_64/x86_64_defconfig/gcc-7/bzImage?raw=true
+      type: bzimage
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.05/x86_64/base/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/x86_64/x86_64_defconfig/gcc-7/modules.tar.xz?raw=true
+      compression: xz
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: grub
+    commands: ramdisk
+    prompts:
+      - '/ #'
