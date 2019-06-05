@@ -1,8 +1,11 @@
+
+
+
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/
-  kernel.tree: mainline
-  kernel.version: v4.15
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.0.21
   kernel.endian: little
   kernel.defconfig: defconfig
   kernel.defconfig_base: defconfig
@@ -13,33 +16,45 @@ metadata:
   platform.name: r8a7795-salvator-x
   platform.mach: renesas
   test.plan: boot
-  git.commit: 569dbb88e80deb68974ef6fdd6a13edb9d686261
-  git.describe: v4.15
-  git.branch: master
-  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  git.commit: fd1594eb706427cc0d88fdfc2c1dbecd5abe7a83
+  git.describe: v5.0.21
+  git.branch: linux-5.0.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: r8a7795-salvator-x
   job.arch: arm64
-  job.name: mainline-master-v4.15-arm64-defconfig-r8a7795-salvator-x.dtb-r8a7795-salvator-x-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/Image?raw=true
+  job.name: stable-linux-5.0.y-v5.0.21-arm64-defconfig-gcc-8-r8a7795-salvator-x.dtb-r8a7795-salvator-x-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/Image?raw=true
   job.kernel_image: Image?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.11/arm64/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/dtbs/renesas/r8a7795-salvator-x.dtb?raw=true
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/dtbs/renesas/r8a7795-salvator-x.dtb?raw=true
+  job.file_server_resource: stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
 
 device_type: r8a7795-salvator-x
 
-job_name: mainline-master-v4.15-arm64-defconfig-r8a7795-salvator-x.dtb-r8a7795-salvator-x-boot
+
+
+job_name: Health Check for r8a7795-salvator-x with v5.0.21
 timeouts:
   job:
     minutes: 10
   action:
-   minutes: 5
+   minutes: 10
   actions:
     power-off:
       seconds: 30
 priority: high
 visibility: public
+
+
+
+
 
 actions:
 - deploy:
@@ -47,16 +62,16 @@ actions:
       minutes: 2
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/Image?raw=true
       type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.11/arm64/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/dtbs/renesas/r8a7795-salvator-x.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/dtbs/renesas/r8a7795-salvator-x.dtb?raw=true
     os: oe
 
 
@@ -66,6 +81,4 @@ actions:
     method: u-boot
     commands: ramdisk
     prompts:
-      - 'linaro-test'
-      - 'root@debian:~#'
       - '/ #'
