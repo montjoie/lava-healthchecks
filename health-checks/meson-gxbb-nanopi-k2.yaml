@@ -1,35 +1,46 @@
+
+
+
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/
-  kernel.tree: mainline
-  kernel.version: v4.16
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.0.21
   kernel.endian: little
   kernel.defconfig: defconfig
   kernel.defconfig_base: defconfig
   kernel.arch_defconfig: arm64-defconfig
   platform.dtb: amlogic/meson-gxbb-nanopi-k2.dtb?raw=true
   platform.dtb_short: meson-gxbb-nanopi-k2.dtb?raw=true
-  platform.fastboot: true
+  platform.fastboot: false
   platform.name: meson-gxbb-nanopi-k2
   platform.mach: amlogic
   test.plan: boot
-  git.commit: d8a5b80568a9cb66810e75b182018e9edb68e8ff
-  git.describe: v4.16
-  git.branch: master
-  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  git.commit: fd1594eb706427cc0d88fdfc2c1dbecd5abe7a83
+  git.describe: v5.0.21
+  git.branch: linux-5.0.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: meson-gxbb-nanopi-k2
   job.arch: arm64
-  job.name: mainline-master-v4.16-arm64-defconfig-meson-gxbb-nanopi-k2.dtb-meson-gxbb-nanopi-k2-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/Image?raw=true
+  job.name: stable-linux-5.0.y-v5.0.21-arm64-defconfig-gcc-8-meson-gxbb-nanopi-k2.dtb-meson-gxbb-nanopi-k2-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/Image?raw=true
   job.kernel_image: Image?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.11/arm64/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/dtbs/amlogic/meson-gxbb-nanopi-k2.dtb?raw=true
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/dtbs/amlogic/meson-gxbb-nanopi-k2.dtb?raw=true
+  job.file_server_resource: stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
 
 device_type: meson-gxbb-nanopi-k2
 
-job_name: mainline-master-v4.16-arm64-defconfig-meson-gxbb-nanopi-k2.dtb-meson-gxbb-nanopi-k2-boot
+
+
+job_name: Health Check for meson-gxbb-nanopi-k2 with v5.0.21
 timeouts:
   job:
     minutes: 10
@@ -41,23 +52,28 @@ timeouts:
 priority: high
 visibility: public
 
+
+
+
+
 actions:
 - deploy:
     timeout:
       minutes: 2
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/Image?raw=true
       type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.11/arm64/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.16/arm64/defconfig/dtbs/amlogic/meson-gxbb-nanopi-k2.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/dtbs/amlogic/meson-gxbb-nanopi-k2.dtb?raw=true
     os: oe
+
 
 - boot:
     timeout:
@@ -65,6 +81,4 @@ actions:
     method: u-boot
     commands: ramdisk
     prompts:
-      - 'linaro-test'
-      - 'root@debian:~#'
       - '/ #'
