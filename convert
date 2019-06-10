@@ -2,6 +2,12 @@
 
 # convert LAVA-CI jobs to be hosted on lava-healtchek
 
+NOACT=0
+
+if [ "$1" = '-n' ];then
+	NOACT=1
+fi
+
 if [ -z "$1" ];then
 	echo "Usage: $0 job to convert"
 	exit 1
@@ -19,6 +25,7 @@ fi
 
 BASEPATH=$(dirname $0)
 
+convert_agl() {
 grep download.automotivelinux.org $1 |grep -iE 'url' |\
 	grep -v '/$' |\
 	sed 's,^.*http,http,' |\
@@ -27,7 +34,7 @@ while read line
 do
 	echo "DEBUG: $line"
 	IPATH=$(dirname $line | sed 's,^https://[a-z0-9\.]*/,,')
-	echo $IPATH
+	echo "IPATH is $IPATH"
 	mkdir -pv ../lava-healthchecks-binary/$BASEPATH/$IPATH
 	OLDPATH=$(pwd)
 	cd ../lava-healthchecks-binary/$BASEPATH/$IPATH
@@ -35,6 +42,7 @@ do
 	cd $OLDPATH
 	sed -i 's,download.automotivelinux.org,github.com/montjoie/lava-healthchecks-binary/blob/master,' $1
 done
+}
 
 grep storage.kernelci.org $1 |grep -iE 'url' |\
 	grep -v '/$' |\
@@ -42,15 +50,21 @@ grep storage.kernelci.org $1 |grep -iE 'url' |\
 	sort | uniq |
 while read line
 do
-	IPATH=$(dirname $line | sed 's,^http://[a-z0-9\.]*/,,')
-	echo $IPATH
-	mkdir -pv ../lava-healthchecks-binary/$BASEPATH/$IPATH
 	OLDPATH=$(pwd)
-	cd ../lava-healthchecks-binary/$BASEPATH/$IPATH
-	wget -N $line
+	IPATH=$(dirname $line | sed 's,^http[s]*://[a-z0-9\.]*/,,')
+	echo "HANDLE: $IPATH"
+	if [ $NOACT -eq 1 ];then
+		echo "DEBUG: will create ../lava-healthchecks-binary/$BASEPATH/$IPATH"
+		echo "DEBUG: wget $line"
+	else
+		mkdir -pv ../lava-healthchecks-binary/$BASEPATH/$IPATH
+		cd ../lava-healthchecks-binary/$BASEPATH/$IPATH
+		wget -N $line
+	fi
 	cd $OLDPATH
 done
 
+convert() {
 grep github.com/montjoie $1 |grep -iE 'url' |\
 	grep -v '/$' |\
 	sed 's,^.*http,http,' |\
@@ -67,10 +81,14 @@ do
 	wget -N $line
 	cd $OLDPATH
 done
+
+}
+
+if [ $NOACT -eq 0 ];then
 sed -i 's,storage.kernelci.org,github.com/montjoie/lava-healthchecks-binary/blob/master,' $1
 sed -i 's,rootfs.cpio.gz$,rootfs.cpio.gz?raw=true,' $1
 sed -i 's,dtb$,dtb?raw=true,' $1
 sed -i 's,Image$,Image?raw=true,' $1
 sed -i 's,modules.tar.xz$,modules.tar.xz?raw=true,' $1
 sed -i 's,http://github.com,https://github.com,' $1
-
+fi

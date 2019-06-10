@@ -1,52 +1,44 @@
-#!/bin/bash
+#!/bin/sh
 
-if [ $# -le 2 ];then
+STORAGE=http://storage.kernelci.org/
+API=https://api.kernelci.org/
+
+. create.conf
+
+GIT_DESCRIBE=v5.0.9
+BRANCH="master"
+BRANCH=linux-5.0.y
+ARCH=arm64
+TREE=mainline
+TREE=stable
+LAB=lab-baylibre
+
+PABCK=$(pwd)
+
+ARCH=$1
+DEVTYPE=$2
+
+wget https://storage.kernelci.org/stable/linux-5.0.y -O laststable || exit $?
+GIT_DESCRIBE=v$(grep -o '5\.0\.[0-9]*' laststable | sort -V | uniq | tail -n1)
+
+cd ~/kernelci-core/
+python2.7 ./lava-v2-jobs-from-api.py --api ${API} --storage ${STORAGE} --describe ${GIT_DESCRIBE} --tree ${TREE} --branch ${BRANCH} --arch ${ARCH} --plans boot --token ${API_TOKEN} --defconfigs 1 --lab $LAB
+
+HC=$(find ~/kernelci-core/$LAB/ |grep $DEVTYPE | head -n1)
+
+if [ ! -e "$HC" ];then
+	echo "ERROR: $HC does not exists, cannot found a job with $DEVTYPE"
 	exit 1
 fi
 
-rm index.html
-wget -q https://storage.kernelci.org/stable/linux-4.17.y/ || exit $?
-LATEST=$(grep -oE 'v4.[0-9][0-9]*(\.[0-9][0-9]*)*' index.html | sort -V | uniq | tail -n1)
+echo "DEBUG: copy $HC"
+cd $PABCK || exit 1
+echo "DEBUG: copy"
+cp $HC health-checks/${DEVTYPE}.yaml || exit 1
 
-echo "Latest is $LATEST"
+sed -i "s,job_name.*,job_name: Health Check for $DEVTYPE with $GIT_DESCRIBE," health-checks/${DEVTYPE}.yaml || exit 1
+#sed -i 's,defconfig,defconfig/gcc-7,' health-checks/${DEVTYPE}.yaml || exit 1
 
+./convert health-checks/${DEVTYPE}.yaml
 
-__DEVTYPE__="$1"
-__ARCH__=$2
-__DTB__=$3
-
-if [ -e /usr/src/linux ];then
-	if [ ! -e "/usr/src/linux/arch/$__ARCH__" ];then
-		exit 1
-	fi
-	echo "$__ARCH__ exists"
-	DTS=$(echo $__DTB__ | sed 's,dtb,dts,')
-	if [ ! -e "/usr/src/linux/arch/$__ARCH__/boot/dts/$DTS" ];then
-		exit 1
-	fi
-	echo "$DTS exists"
-else
-	echo "SKIP: test with /usr/src/linux"
-fi
-
-
-FINAL=health-checks/${__DEVTYPE__}.yaml
-cp health-checks/template.yaml $FINAL || exit $?
-sed -i "s,__DEVTYPE__,$__DEVTYPE__,g" $FINAL || exit $?
-sed -i "s,__ARCH__,$__ARCH__,g" $FINAL || exit $?
-sed -i "s,__DTB__,$__DTB__,g" $FINAL || exit $?
-sed -i "s,__KV__,$LATEST,g" $FINAL || exit $?
-
-case $__ARCH__ in
-arm)
-	sed -i 's,arm/defconfig,arm/multi_v7_defconfig,' $FINAL
-	sed -i 's,image,zimage,' $FINAL
-	sed -i 's,Image,zImage,' $FINAL
-;;
-*)
-	echo "No hack for $__ARCH__"
-;;
-esac
-
-./update_to $FINAL $LATEST $LATEST
-
+exit 0
