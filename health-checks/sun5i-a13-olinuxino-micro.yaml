@@ -3,32 +3,34 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm/multi_v7_defconfig/gcc-7/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/
   kernel.tree: stable
-  kernel.version: v5.0.5
+  kernel.version: v5.0.21
   kernel.endian: little
-  kernel.defconfig/gcc-7: multi_v7_defconfig
-  kernel.defconfig/gcc-7_base: multi_v7_defconfig
-  kernel.arch_defconfig/gcc-7: arm-multi_v7_defconfig
+  kernel.defconfig: sunxi_defconfig
+  kernel.defconfig_base: sunxi_defconfig
+  kernel.arch_defconfig: arm-sunxi_defconfig
   platform.dtb: sun5i-a13-olinuxino-micro.dtb?raw=true
   platform.dtb_short: sun5i-a13-olinuxino-micro.dtb?raw=true
   platform.fastboot: false
   platform.name: sun5i-a13-olinuxino-micro
   platform.mach: allwinner
   test.plan: boot
-  git.commit: 1f6f316a537d4310747b08f89fb32565317b288b
-  git.describe: v5.0.5
+  git.commit: fd1594eb706427cc0d88fdfc2c1dbecd5abe7a83
+  git.describe: v5.0.21
   git.branch: linux-5.0.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: sun5i-a13-olinuxino-micro
   job.arch: arm
-  job.name: stable-linux-5.0.y-v5.0.5-arm-multi_v7_defconfig/gcc-7-sun5i-a13-olinuxino-micro.dtb-sun5i-a13-olinuxino-micro-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm/multi_v7_defconfig/gcc-7/zImage?raw=true
+  job.name: stable-linux-5.0.y-v5.0.21-arm-sunxi_defconfig-gcc-8-sun5i-a13-olinuxino-micro.dtb-sun5i-a13-olinuxino-micro-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/zImage?raw=true
   job.kernel_image: zImage?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm/multi_v7_defconfig/gcc-7/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.05/armel/base/rootfs.cpio.gz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm/multi_v7_defconfig/gcc-7/dtbs/sun5i-a13-olinuxino-micro.dtb?raw=true
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/dtbs/sun5i-a13-olinuxino-micro.dtb?raw=true
+  job.file_server_resource: stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8
+  job.build_environment: gcc-8
 
 
 
@@ -38,7 +40,7 @@ device_type: sun5i-a13-olinuxino-micro
 
 
 
-job_name: Health Check for sun5i-a13-olinuxino-micro with v5.0.5
+job_name: Health Check for sun5i-a13-olinuxino-micro with v5.0.21
 timeouts:
   job:
     minutes: 10
@@ -60,16 +62,16 @@ actions:
       minutes: 2
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm/multi_v7_defconfig/gcc-7/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/zImage?raw=true
       type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.05/armel/base/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm/multi_v7_defconfig/gcc-7/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.5/arm/multi_v7_defconfig/gcc-7/dtbs/sun5i-a13-olinuxino-micro.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/dtbs/sun5i-a13-olinuxino-micro.dtb?raw=true
     os: oe
 
 
