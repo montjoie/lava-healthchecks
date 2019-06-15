@@ -1,0 +1,84 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.0.21
+  kernel.endian: little
+  kernel.defconfig: sunxi_defconfig
+  kernel.defconfig_base: sunxi_defconfig
+  kernel.arch_defconfig: arm-sunxi_defconfig
+  platform.dtb: sun7i-a20-cubieboard2.dtb?raw=true
+  platform.dtb_short: sun7i-a20-cubieboard2.dtb?raw=true
+  platform.fastboot: false
+  platform.name: sun7i-a20-cubieboard2
+  platform.mach: allwinner
+  test.plan: boot
+  git.commit: fd1594eb706427cc0d88fdfc2c1dbecd5abe7a83
+  git.describe: v5.0.21
+  git.branch: linux-5.0.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  device.type: sun7i-a20-cubieboard2
+  job.arch: arm
+  job.name: stable-linux-5.0.y-v5.0.21-arm-sunxi_defconfig-gcc-8-sun7i-a20-cubieboard2.dtb-sun7i-a20-cubieboard2-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/zImage?raw=true
+  job.kernel_image: zImage?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/dtbs/sun7i-a20-cubieboard2.dtb?raw=true
+  job.file_server_resource: stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+device_type: sun7i-a20-cubieboard2
+
+
+
+job_name: Health Check for sun7i-a20-cubieboard2 with v5.0.21
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 10
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/zImage?raw=true
+      type: zimage
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/sunxi_defconfig/gcc-8/dtbs/sun7i-a20-cubieboard2.dtb?raw=true
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - '/ #'
