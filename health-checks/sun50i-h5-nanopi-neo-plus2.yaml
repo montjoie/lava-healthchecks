@@ -1,0 +1,84 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.0.21
+  kernel.endian: little
+  kernel.defconfig: defconfig
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: arm64-defconfig
+  platform.dtb: allwinner/sun50i-h5-nanopi-neo-plus2.dtb?raw=true
+  platform.dtb_short: sun50i-h5-nanopi-neo-plus2.dtb?raw=true
+  platform.fastboot: false
+  platform.name: sun50i-h5-nanopi-neo-plus2
+  platform.mach: allwinner
+  test.plan: boot
+  git.commit: fd1594eb706427cc0d88fdfc2c1dbecd5abe7a83
+  git.describe: v5.0.21
+  git.branch: linux-5.0.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  device.type: sun50i-h5-nanopi-neo-plus2
+  job.arch: arm64
+  job.name: stable-linux-5.0.y-v5.0.21-arm64-defconfig-gcc-8-sun50i-h5-nanopi-neo-plus2.dtb-sun50i-h5-nanopi-neo-plus2-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/Image?raw=true
+  job.kernel_image: Image?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/dtbs/allwinner/sun50i-h5-nanopi-neo-plus2.dtb?raw=true
+  job.file_server_resource: stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+device_type: sun50i-h5-nanopi-neo-plus2
+
+
+
+job_name: Health Check for sun50i-h5-nanopi-neo-plus2 with v5.0.21
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 10
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/Image?raw=true
+      type: image
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm64/defconfig/gcc-8/dtbs/allwinner/sun50i-h5-nanopi-neo-plus2.dtb?raw=true
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - '/ #'
