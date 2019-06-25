@@ -1,0 +1,84 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/
+  kernel.tree: mainline
+  kernel.version: v5.2-rc6-15-g249155c20f9b
+  kernel.endian: little
+  kernel.defconfig: defconfig
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: arm64-defconfig
+  platform.dtb: allwinner/sun50i-h6-orangepi-3.dtb?raw=true
+  platform.dtb_short: sun50i-h6-orangepi-3.dtb?raw=true
+  platform.fastboot: false
+  platform.name: sun50i-h6-orangepi-3
+  platform.mach: allwinner
+  test.plan: boot
+  git.commit: 249155c20f9b0754bc1b932a33344cfb4e0c2101
+  git.describe: v5.2-rc6-15-g249155c20f9b
+  git.branch: master
+  git.url: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  device.type: sun50i-h6-orangepi-3
+  job.arch: arm64
+  job.name: mainline-master-v5.2-rc6-15-g249155c20f9b-arm64-defconfig-gcc-8-sun50i-h6-orangepi-3.dtb-sun50i-h6-orangepi-3-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/Image?raw=true
+  job.kernel_image: Image?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/dtbs/allwinner/sun50i-h6-orangepi-3.dtb?raw=true
+  job.file_server_resource: mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+device_type: sun50i-h6-orangepi-3
+
+
+
+job_name: Health Check for sun50i-h6-orangepi-3 with v5.2-rc6-15-g249155c20f9b
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 10
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/Image?raw=true
+      type: image
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/dtbs/allwinner/sun50i-h6-orangepi-3.dtb?raw=true
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - '/ #'
