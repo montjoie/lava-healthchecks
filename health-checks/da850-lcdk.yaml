@@ -3,9 +3,9 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/davinci_all_defconfig/gcc-8/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/
   kernel.tree: stable
-  kernel.version: v5.0.21
+  kernel.version: v5.1.19
   kernel.endian: little
   kernel.defconfig: davinci_all_defconfig
   kernel.defconfig_base: davinci_all_defconfig
@@ -16,20 +16,20 @@ metadata:
   platform.name: da850-lcdk
   platform.mach: davinci
   test.plan: boot
-  git.commit: fd1594eb706427cc0d88fdfc2c1dbecd5abe7a83
-  git.describe: v5.0.21
-  git.branch: linux-5.0.y
+  git.commit: 0d4f1b2afde8df3b0ca79818123a43a184a0e1ea
+  git.describe: v5.1.19
+  git.branch: linux-5.1.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: da850-lcdk
   job.arch: arm
-  job.name: stable-linux-5.0.y-v5.0.21-arm-davinci_all_defconfig-gcc-8-da850-lcdk.dtb-da850-lcdk-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/davinci_all_defconfig/gcc-8/zImage?raw=true
+  job.name: stable-linux-5.1.y-v5.1.19-arm-davinci_all_defconfig-gcc-8-da850-lcdk.dtb-da850-lcdk-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/zImage?raw=true
   job.kernel_image: zImage?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/davinci_all_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/modules.tar.xz?raw=true
   job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/davinci_all_defconfig/gcc-8/dtbs/da850-lcdk.dtb?raw=true
-  job.file_server_resource: stable/linux-5.0.y/v5.0.21/arm/davinci_all_defconfig/gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/dtbs/da850-lcdk.dtb?raw=true
+  job.file_server_resource: stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8
   job.build_environment: gcc-8
 
 
@@ -40,7 +40,7 @@ device_type: da850-lcdk
 
 
 
-job_name: Health Check for da850-lcdk with v5.0.21
+job_name: Health Check for da850-lcdk with v5.1.19
 timeouts:
   job:
     minutes: 10
@@ -62,16 +62,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/davinci_all_defconfig/gcc-8/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/zImage?raw=true
       type: zimage
     ramdisk:
       url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/davinci_all_defconfig/gcc-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/davinci_all_defconfig/gcc-8/dtbs/da850-lcdk.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/dtbs/da850-lcdk.dtb?raw=true
     os: oe
 
 

@@ -1,8 +1,11 @@
+
+
+
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.14-rc8/arm/multi_v7_defconfig/
-  kernel.tree: mainline
-  kernel.version: v4.14-rc8
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/multi_v7_defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.1.19
   kernel.endian: little
   kernel.defconfig: multi_v7_defconfig
   kernel.defconfig_base: multi_v7_defconfig
@@ -13,55 +16,64 @@ metadata:
   platform.name: imx6q-sabrelite
   platform.mach: imx
   test.plan: boot
-  git.commit: 569dbb88e80deb68974ef6fdd6a13edb9d686261
-  git.describe: v4.14-rc8
-  git.branch: master
-  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  git.commit: 0d4f1b2afde8df3b0ca79818123a43a184a0e1ea
+  git.describe: v5.1.19
+  git.branch: linux-5.1.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: imx6q-sabrelite
   job.arch: arm
-  job.name: mainline-master-v4.14-rc8-arm-multi_v7_defconfig-imx6q-sabrelite.dtb-imx6q-sabrelite-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.14-rc8/arm/multi_v7_defconfig/zImage?raw=true
+  job.name: stable-linux-5.1.y-v5.1.19-arm-multi_v7_defconfig-gcc-8-imx6q-sabrelite.dtb-imx6q-sabrelite-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
   job.kernel_image: zImage?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.14-rc8/arm/multi_v7_defconfig/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.14-rc8/arm/multi_v7_defconfig/dtbs/imx6q-sabrelite.dtb?raw=true
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/multi_v7_defconfig/gcc-8/dtbs/imx6q-sabrelite.dtb?raw=true
+  job.file_server_resource: stable/linux-5.1.y/v5.1.19/arm/multi_v7_defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
 
 device_type: imx6q-sabrelite
 
-notify:
-  criteria:
-    status: finished
 
-job_name: mainline-master-v4.14-rc8-arm-multi_v7_defconfig-imx6q-sabrelite.dtb-imx6q-sabrelite-boot
+
+job_name: Health Check for imx6q-sabrelite with v5.1.19
 timeouts:
   job:
     minutes: 10
   action:
-   minutes: 5
+   minutes: 10
   actions:
     power-off:
       seconds: 30
 priority: high
 visibility: public
 
+
+
+
+
 actions:
 - deploy:
     timeout:
-      minutes: 2
+      minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.14-rc8/arm/multi_v7_defconfig/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
       type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.14-rc8/arm/multi_v7_defconfig/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.14-rc8/arm/multi_v7_defconfig/dtbs/imx6q-sabrelite.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/multi_v7_defconfig/gcc-8/dtbs/imx6q-sabrelite.dtb?raw=true
     os: oe
+
 
 - boot:
     timeout:
@@ -69,6 +81,4 @@ actions:
     method: u-boot
     commands: ramdisk
     prompts:
-      - 'linaro-test'
-      - 'root@debian:~#'
       - '/ #'
