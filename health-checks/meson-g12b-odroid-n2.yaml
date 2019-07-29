@@ -1,0 +1,90 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/
+  kernel.tree: next
+  kernel.version: next-20190729
+  kernel.endian: little
+  kernel.defconfig: defconfig
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: arm64-defconfig
+  platform.dtb: amlogic/meson-g12b-odroid-n2.dtb?raw=true
+  platform.dtb_short: meson-g12b-odroid-n2.dtb?raw=true
+  platform.fastboot: false
+  platform.name: meson-g12b-odroid-n2
+  platform.mach: amlogic
+  test.plan: boot
+  git.commit: 0d8b3265d9a6376b416b3ba86f758a5c6a85a6df
+  git.describe: next-20190729
+  git.branch: master
+  git.url: git://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+  device.type: meson-g12b-odroid-n2
+  job.arch: arm64
+  job.name: next-master-next-20190729-arm64-defconfig-gcc-8-meson-g12b-odroid-n2.dtb-meson-g12b-odroid-n2-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/Image?raw=true
+  job.kernel_image: Image?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12b-odroid-n2.dtb?raw=true
+  job.file_server_resource: next/master/next-20190729/arm64/defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+
+
+device_type: meson-g12b-odroid-n2
+
+
+context:
+  extra_kernel_args: "console_msg_format=syslog"
+
+
+
+job_name: Health Check for meson-g12b-odroid-n2 with next-20190729
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 10
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/Image?raw=true
+      type: image
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12b-odroid-n2.dtb?raw=true
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - '/ #'
