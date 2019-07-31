@@ -59,7 +59,7 @@ visibility: public
 actions:
 - deploy:
     timeout:
-      minutes: 2
+       minutes: 10
     to: tftp
     kernel:
       url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
