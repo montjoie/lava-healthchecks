@@ -1,37 +1,90 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.5/arc/hsdk_defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.2.5
+  kernel.endian: little
+  kernel.defconfig: hsdk_defconfig
+  kernel.defconfig_base: hsdk_defconfig
+  kernel.arch_defconfig: arc-hsdk_defconfig
+  platform.dtb: hsdk.dtb?raw=true
+  platform.dtb_short: hsdk.dtb?raw=true
+  platform.fastboot: false
+  platform.name: hsdk
+  platform.mach: arc
+  test.plan: boot
+  git.commit: 2519374d2a6b8aa5d395393f21e74232409c2e82
+  git.describe: v5.2.5
+  git.branch: linux-5.2.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  device.type: hsdk
+  job.arch: arc
+  job.name: stable-linux-5.2.y-v5.2.5-arc-hsdk_defconfig-gcc-8-hsdk.dtb-hsdk-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.5/arc/hsdk_defconfig/gcc-8/uImage?raw=true
+  job.kernel_image: uImage?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.5/arc/hsdk_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arc/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.5/arc/hsdk_defconfig/gcc-8/dtbs/hsdk.dtb?raw=true
+  job.file_server_resource: stable/linux-5.2.y/v5.2.5/arc/hsdk_defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+
+
 device_type: hsdk
 
-job_name: Health test for hsdk with v4.18.16
+
+context:
+  extra_kernel_args: "console_msg_format=syslog"
+
+
+
+job_name: Health Check for hsdk with v5.2.5
 timeouts:
   job:
     minutes: 10
   action:
-   minutes: 5
+   minutes: 10
   actions:
     power-off:
       seconds: 30
 priority: high
 visibility: public
 
+
+
+
+
 actions:
 - deploy:
     timeout:
-      minutes: 2
+      minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/foss-for-synopsys-dwc-arc-processors/buildroot/releases/download/arc-2017.11-hsdk-release/uImage
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.5/arc/hsdk_defconfig/gcc-8/uImage?raw=true
+      type: uimage
     ramdisk:
-      url: https://storage.kernelci.org/images/rootfs/buildroot/kci-2018.05/arc/base/rootfs.cpio.gz
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arc/base/rootfs.cpio.gz?raw=true
       compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.5/arc/hsdk_defconfig/gcc-8/modules.tar.xz?raw=true
+      compression: xz
     dtb:
-      url: https://github.com/foss-for-synopsys-dwc-arc-processors/buildroot/releases/download/arc-2017.11-hsdk-release/hsdk.dtb
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.5/arc/hsdk_defconfig/gcc-8/dtbs/hsdk.dtb?raw=true
     os: oe
+
 
 - boot:
     timeout:
       minutes: 5
     method: u-boot
     commands: ramdisk
-    type: bootm
     prompts:
-      - 'root@debian:~#'
       - '/ #'
