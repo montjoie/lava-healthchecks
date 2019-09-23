@@ -3,33 +3,33 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.16/riscv/tinyconfig/gcc-8/
-  kernel.tree: stable
-  kernel.version: v5.2.16
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.3/riscv/defconfig/gcc-8/
+  kernel.tree: mainline
+  kernel.version: v5.3
   kernel.endian: little
-  kernel.defconfig: tinyconfig
-  kernel.defconfig_base: tinyconfig
-  kernel.arch_defconfig: riscv-tinyconfig
+  kernel.defconfig: defconfig
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: riscv-defconfig
   platform.dtb: sifive/hifive-unleashed-a00.dtb?raw=true
   platform.dtb_short: hifive-unleashed-a00.dtb?raw=true
   platform.fastboot: false
   platform.name: hifive-unleashed-a00
   platform.mach: sifive
   test.plan: boot
-  git.commit: 1e2ba4a74fa73f911f5d0f5f8fb0f6e621024842
-  git.describe: v5.2.16
-  git.branch: linux-5.2.y
-  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  git.commit: 4d856f72c10ecb060868ed10ff1b1453943fc6c8
+  git.describe: v5.3
+  git.branch: master
+  git.url: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
   device.type: hifive-unleashed-a00
   job.arch: riscv
-  job.name: stable-linux-5.2.y-v5.2.16-riscv-tinyconfig-gcc-8-hifive-unleashed-a00.dtb-hifive-unleashed-a00-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.16/riscv/tinyconfig/gcc-8/Image?raw=true
+  job.name: mainline-master-v5.3-riscv-defconfig-gcc-8-hifive-unleashed-a00.dtb-hifive-unleashed-a00-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.3/riscv/defconfig/gcc-8/Image?raw=true
   job.kernel_image: Image?raw=true
-  job.modules_url: None
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.3/riscv/defconfig/gcc-8/modules.tar.xz?raw=true
   job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/riscv/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.16/riscv/tinyconfig/gcc-8/dtbs/sifive/hifive-unleashed-a00.dtb?raw=true
-  job.file_server_resource: stable/linux-5.2.y/v5.2.16/riscv/tinyconfig/gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.3/riscv/defconfig/gcc-8/dtbs/sifive/hifive-unleashed-a00.dtb?raw=true
+  job.file_server_resource: mainline/master/v5.3/riscv/defconfig/gcc-8
   job.build_environment: gcc-8
 
 
@@ -46,7 +46,7 @@ context:
 
 
 
-job_name: Health Check for hifive-unleashed-a00 with v5.2.16
+job_name: Health Check for hifive-unleashed-a00 with v5.3
 timeouts:
   job:
     minutes: 10
@@ -68,13 +68,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.16/riscv/tinyconfig/gcc-8/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.3/riscv/defconfig/gcc-8/Image?raw=true
       type: image
     ramdisk:
       url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/riscv/base/rootfs.cpio.gz?raw=true
       compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.3/riscv/defconfig/gcc-8/modules.tar.xz?raw=true
+      compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.16/riscv/tinyconfig/gcc-8/dtbs/sifive/hifive-unleashed-a00.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.3/riscv/defconfig/gcc-8/dtbs/sifive/hifive-unleashed-a00.dtb?raw=true
     os: oe
 
 
