@@ -1,34 +1,85 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.17/arm/omap2plus_defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.2.17
+  kernel.endian: little
+  kernel.defconfig: omap2plus_defconfig
+  kernel.defconfig_base: omap2plus_defconfig
+  kernel.arch_defconfig: arm-omap2plus_defconfig
+  platform.dtb: omap3-beagle-xm.dtb?raw=true
+  platform.dtb_short: omap3-beagle-xm.dtb?raw=true
+  platform.fastboot: false
+  platform.name: omap3-beagle-xm
+  platform.mach: omap2
+  test.plan: boot
+  git.commit: 5e408889e4af03a27b77cf4635934fefb9f4afab
+  git.describe: v5.2.17
+  git.branch: linux-5.2.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  device.type: beagle-xm
+  job.arch: arm
+  job.name: stable-linux-5.2.y-v5.2.17-arm-omap2plus_defconfig-gcc-8-omap3-beagle-xm.dtb-beagle-xm-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.17/arm/omap2plus_defconfig/gcc-8/zImage?raw=true
+  job.kernel_image: zImage?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.17/arm/omap2plus_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.17/arm/omap2plus_defconfig/gcc-8/dtbs/omap3-beagle-xm.dtb?raw=true
+  job.file_server_resource: stable/linux-5.2.y/v5.2.17/arm/omap2plus_defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+
+
 device_type: beagle-xm
 
-job_name: Health test for beagle-xm with v4.17.14
+
+context:
+  extra_kernel_args: "console_msg_format=syslog"
+
+
+
+job_name: Health Check for beagle-xm with v5.2.17
 timeouts:
   job:
     minutes: 10
   action:
-   minutes: 5
+   minutes: 10
   actions:
     power-off:
       seconds: 30
 priority: high
 visibility: public
 
+
+
+
+
 actions:
 - deploy:
     timeout:
-       minutes: 10
+      minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.17.y/v4.17.14/arm/multi_v7_defconfig/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.17/arm/omap2plus_defconfig/gcc-8/zImage?raw=true
       type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.17.y/v4.17.14/arm/multi_v7_defconfig/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.17/arm/omap2plus_defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.17.y/v4.17.14/arm/multi_v7_defconfig/dtbs/omap3-beagle-xm.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.17/arm/omap2plus_defconfig/gcc-8/dtbs/omap3-beagle-xm.dtb?raw=true
     os: oe
+
 
 - boot:
     timeout:
@@ -36,5 +87,4 @@ actions:
     method: u-boot
     commands: ramdisk
     prompts:
-      - 'root@debian:~#'
       - '/ #'
