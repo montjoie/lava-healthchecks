@@ -3,9 +3,9 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.11/arm64/defconfig/gcc-8/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm64/defconfig/gcc-8/
   kernel.tree: stable
-  kernel.version: v5.2.11
+  kernel.version: v5.2.18
   kernel.endian: little
   kernel.defconfig: defconfig
   kernel.defconfig_base: defconfig
@@ -16,20 +16,20 @@ metadata:
   platform.name: meson-g12a-u200
   platform.mach: amlogic
   test.plan: boot
-  git.commit: c3915fe1bf1235dbf3b0bced734c960202915bd5
-  git.describe: v5.2.11
+  git.commit: 0a9d6a58b4acfa52384b3175bd3d0742467bcf65
+  git.describe: v5.2.18
   git.branch: linux-5.2.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: meson-g12a-u200
   job.arch: arm64
-  job.name: stable-linux-5.2.y-v5.2.11-arm64-defconfig-gcc-8-meson-g12a-u200.dtb-meson-g12a-u200-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.11/arm64/defconfig/gcc-8/Image?raw=true
+  job.name: stable-linux-5.2.y-v5.2.18-arm64-defconfig-gcc-8-meson-g12a-u200.dtb-meson-g12a-u200-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm64/defconfig/gcc-8/Image?raw=true
   job.kernel_image: Image?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.11/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
   job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.11/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12a-u200.dtb?raw=true
-  job.file_server_resource: stable/linux-5.2.y/v5.2.11/arm64/defconfig/gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12a-u200.dtb?raw=true
+  job.file_server_resource: stable/linux-5.2.y/v5.2.18/arm64/defconfig/gcc-8
   job.build_environment: gcc-8
 
 
@@ -46,7 +46,7 @@ context:
 
 
 
-job_name: Health Check for meson-g12a-u200 with v5.2.11
+job_name: Health Check for meson-g12a-u200 with v5.2.18
 timeouts:
   job:
     minutes: 10
@@ -68,16 +68,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.11/arm64/defconfig/gcc-8/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm64/defconfig/gcc-8/Image?raw=true
       type: image
     ramdisk:
       url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.11/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.11/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12a-u200.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12a-u200.dtb?raw=true
     os: oe
 
 
