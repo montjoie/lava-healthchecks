@@ -1,0 +1,90 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20191002/arm64/defconfig/clang-8/
+  kernel.tree: next
+  kernel.version: next-20191002
+  kernel.endian: little
+  kernel.defconfig: defconfig
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: arm64-defconfig
+  platform.dtb: rockchip/rk3399-khadas-edge-captain.dtb?raw=true
+  platform.dtb_short: rk3399-khadas-edge-captain.dtb?raw=true
+  platform.fastboot: false
+  platform.name: rk3399-khadas-edge-captain
+  platform.mach: rockchip
+  test.plan: boot
+  git.commit: a32db7e1172439240202b843642465618498170d
+  git.describe: next-20191002
+  git.branch: master
+  git.url: git://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+  device.type: rk3399-khadas-edge-captain
+  job.arch: arm64
+  job.name: next-master-next-20191002-arm64-defconfig-clang-8-rk3399-khadas-edge-captain.dtb-rk3399-khadas-edge-captain-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20191002/arm64/defconfig/clang-8/Image?raw=true
+  job.kernel_image: Image?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20191002/arm64/defconfig/clang-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20191002/arm64/defconfig/clang-8/dtbs/rockchip/rk3399-khadas-edge-captain.dtb?raw=true
+  job.file_server_resource: next/master/next-20191002/arm64/defconfig/clang-8
+  job.build_environment: clang-8
+
+
+
+
+
+
+
+device_type: rk3399-khadas-edge-captain
+
+
+context:
+  extra_kernel_args: "console_msg_format=syslog"
+
+
+
+job_name: Health Check for rk3399-khadas-edge-captain with next-20191002
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 10
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20191002/arm64/defconfig/clang-8/Image?raw=true
+      type: image
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20191002/arm64/defconfig/clang-8/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20191002/arm64/defconfig/clang-8/dtbs/rockchip/rk3399-khadas-edge-captain.dtb?raw=true
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - '/ #'
