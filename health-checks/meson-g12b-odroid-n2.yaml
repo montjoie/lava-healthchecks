@@ -3,9 +3,9 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/
-  kernel.tree: next
-  kernel.version: next-20190729
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.5/arm64/defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.3.5
   kernel.endian: little
   kernel.defconfig: defconfig
   kernel.defconfig_base: defconfig
@@ -16,20 +16,20 @@ metadata:
   platform.name: meson-g12b-odroid-n2
   platform.mach: amlogic
   test.plan: boot
-  git.commit: 0d8b3265d9a6376b416b3ba86f758a5c6a85a6df
-  git.describe: next-20190729
-  git.branch: master
-  git.url: git://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+  git.commit: dc073f193b70176b16ae3e6e8afccee07a13df90
+  git.describe: v5.3.5
+  git.branch: linux-5.3.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: meson-g12b-odroid-n2
   job.arch: arm64
-  job.name: next-master-next-20190729-arm64-defconfig-gcc-8-meson-g12b-odroid-n2.dtb-meson-g12b-odroid-n2-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/Image?raw=true
+  job.name: stable-linux-5.3.y-v5.3.5-arm64-defconfig-gcc-8-meson-g12b-odroid-n2.dtb-meson-g12b-odroid-n2-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.5/arm64/defconfig/gcc-8/Image?raw=true
   job.kernel_image: Image?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.5/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/arm64/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12b-odroid-n2.dtb?raw=true
-  job.file_server_resource: next/master/next-20190729/arm64/defconfig/gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.5/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12b-odroid-n2.dtb?raw=true
+  job.file_server_resource: stable/linux-5.3.y/v5.3.5/arm64/defconfig/gcc-8
   job.build_environment: gcc-8
 
 
@@ -46,7 +46,7 @@ context:
 
 
 
-job_name: Health Check for meson-g12b-odroid-n2 with next-20190729
+job_name: Health Check for meson-g12b-odroid-n2 with v5.3.5
 timeouts:
   job:
     minutes: 10
@@ -68,16 +68,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.5/arm64/defconfig/gcc-8/Image?raw=true
       type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/arm64/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.5/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190729/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12b-odroid-n2.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.5/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12b-odroid-n2.dtb?raw=true
     os: oe
 
 

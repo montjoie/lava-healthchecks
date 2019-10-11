@@ -1,6 +1,52 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm64/defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.2.20
+  kernel.endian: little
+  kernel.defconfig: defconfig
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: arm64-defconfig
+  platform.dtb: amlogic/meson-g12a-x96-max.dtb?raw=true
+  platform.dtb_short: meson-g12a-x96-max.dtb?raw=true
+  platform.fastboot: true
+  platform.name: meson-g12a-x96-max
+  platform.mach: amlogic
+  test.plan: boot
+  git.commit: 56fd0c9f54730c7049774c0aa2a73151b628b735
+  git.describe: v5.2.20
+  git.branch: linux-5.2.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  device.type: meson-g12a-x96-max
+  job.arch: arm64
+  job.name: stable-linux-5.2.y-v5.2.20-arm64-defconfig-gcc-8-meson-g12a-x96-max.dtb-meson-g12a-x96-max-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm64/defconfig/gcc-8/Image?raw=true
+  job.kernel_image: Image?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/arm64/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12a-x96-max.dtb?raw=true
+  job.file_server_resource: stable/linux-5.2.y/v5.2.20/arm64/defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+
+
 device_type: meson-g12a-x96-max
 
-job_name: health check for meson-g12a-x96-max with next-master-next-20190215-arm64-defconfig-gcc-7
+
+context:
+  extra_kernel_args: "console_msg_format=syslog"
+
+
+
+job_name: Health Check for meson-g12a-x96-max with v5.2.20
 timeouts:
   job:
     minutes: 10
@@ -12,23 +58,28 @@ timeouts:
 priority: high
 visibility: public
 
+
+
+
+
 actions:
 - deploy:
     timeout:
-       minutes: 10
+      minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190215/arm64/defconfig/gcc-7/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm64/defconfig/gcc-8/Image?raw=true
       type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.05/arm64/base/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/arm64/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190215/arm64/defconfig/gcc-7/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190215/arm64/defconfig/gcc-7/dtbs/amlogic/meson-g12a-x96-max.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12a-x96-max.dtb?raw=true
     os: oe
+
 
 - boot:
     timeout:
