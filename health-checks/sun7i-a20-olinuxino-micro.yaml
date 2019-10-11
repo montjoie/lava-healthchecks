@@ -3,9 +3,9 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm/sunxi_defconfig/gcc-8/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm/sunxi_defconfig/gcc-8/
   kernel.tree: stable
-  kernel.version: v5.2.18
+  kernel.version: v5.2.20
   kernel.endian: little
   kernel.defconfig: sunxi_defconfig
   kernel.defconfig_base: sunxi_defconfig
@@ -16,20 +16,20 @@ metadata:
   platform.name: sun7i-a20-olinuxino-micro
   platform.mach: allwinner
   test.plan: boot
-  git.commit: 0a9d6a58b4acfa52384b3175bd3d0742467bcf65
-  git.describe: v5.2.18
+  git.commit: 56fd0c9f54730c7049774c0aa2a73151b628b735
+  git.describe: v5.2.20
   git.branch: linux-5.2.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: sun7i-a20-olinuxino-micro
   job.arch: arm
-  job.name: stable-linux-5.2.y-v5.2.18-arm-sunxi_defconfig-gcc-8-sun7i-a20-olinuxino-micro.dtb-sun7i-a20-olinuxino-micro-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm/sunxi_defconfig/gcc-8/zImage?raw=true
+  job.name: stable-linux-5.2.y-v5.2.20-arm-sunxi_defconfig-gcc-8-sun7i-a20-olinuxino-micro.dtb-sun7i-a20-olinuxino-micro-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm/sunxi_defconfig/gcc-8/zImage?raw=true
   job.kernel_image: zImage?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/armel/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm/sunxi_defconfig/gcc-8/dtbs/sun7i-a20-olinuxino-micro.dtb?raw=true
-  job.file_server_resource: stable/linux-5.2.y/v5.2.18/arm/sunxi_defconfig/gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm/sunxi_defconfig/gcc-8/dtbs/sun7i-a20-olinuxino-micro.dtb?raw=true
+  job.file_server_resource: stable/linux-5.2.y/v5.2.20/arm/sunxi_defconfig/gcc-8
   job.build_environment: gcc-8
 
 
@@ -46,7 +46,7 @@ context:
 
 
 
-job_name: Health Check for sun7i-a20-olinuxino-micro with v5.2.18
+job_name: Health Check for sun7i-a20-olinuxino-micro with v5.2.20
 timeouts:
   job:
     minutes: 10
@@ -68,16 +68,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm/sunxi_defconfig/gcc-8/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm/sunxi_defconfig/gcc-8/zImage?raw=true
       type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/armel/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.18/arm/sunxi_defconfig/gcc-8/dtbs/sun7i-a20-olinuxino-micro.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.20/arm/sunxi_defconfig/gcc-8/dtbs/sun7i-a20-olinuxino-micro.dtb?raw=true
     os: oe
 
 
