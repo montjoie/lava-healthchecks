@@ -1,0 +1,90 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.8/arm64/defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.3.8
+  kernel.endian: little
+  kernel.defconfig: defconfig
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: arm64-defconfig
+  platform.dtb: renesas/r8a7796-m3ulcb-kf.dtb?raw=true
+  platform.dtb_short: r8a7796-m3ulcb-kf.dtb?raw=true
+  platform.fastboot: false
+  platform.name: r8a7796-m3ulcb-kf
+  platform.mach: renesas
+  test.plan: boot
+  git.commit: db0655e705be645ad673b0a70160921e088517c0
+  git.describe: v5.3.8
+  git.branch: linux-5.3.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  device.type: r8a7796-m3ulcb-kf
+  job.arch: arm64
+  job.name: stable-linux-5.3.y-v5.3.8-arm64-defconfig-gcc-8-r8a7796-m3ulcb-kf.dtb-r8a7796-m3ulcb-kf-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.8/arm64/defconfig/gcc-8/Image?raw=true
+  job.kernel_image: Image?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.8/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/arm64/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.8/arm64/defconfig/gcc-8/dtbs/renesas/r8a7796-m3ulcb-kf.dtb?raw=true
+  job.file_server_resource: stable/linux-5.3.y/v5.3.8/arm64/defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+
+
+device_type: r8a7796-m3ulcb-kf
+
+
+context:
+  extra_kernel_args: "console_msg_format=syslog"
+
+
+
+job_name: Health Check for r8a7796-m3ulcb-kf with v5.3.8
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 10
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.8/arm64/defconfig/gcc-8/Image?raw=true
+      type: image
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/arm64/base/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.8/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.8/arm64/defconfig/gcc-8/dtbs/renesas/r8a7796-m3ulcb-kf.dtb?raw=true
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - '/ #'
