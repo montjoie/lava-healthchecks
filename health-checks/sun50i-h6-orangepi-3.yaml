@@ -3,9 +3,9 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/
-  kernel.tree: mainline
-  kernel.version: v5.2-rc6-15-g249155c20f9b
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.11/arm64/defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.3.11
   kernel.endian: little
   kernel.defconfig: defconfig
   kernel.defconfig_base: defconfig
@@ -16,21 +16,24 @@ metadata:
   platform.name: sun50i-h6-orangepi-3
   platform.mach: allwinner
   test.plan: boot
-  git.commit: 249155c20f9b0754bc1b932a33344cfb4e0c2101
-  git.describe: v5.2-rc6-15-g249155c20f9b
-  git.branch: master
-  git.url: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  test.plan_variant: 
+  git.commit: dada86c5aaa8f2305bf8a8bf9014b60603f9f013
+  git.describe: v5.3.11
+  git.branch: linux-5.3.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: sun50i-h6-orangepi-3
   job.arch: arm64
-  job.name: mainline-master-v5.2-rc6-15-g249155c20f9b-arm64-defconfig-gcc-8-sun50i-h6-orangepi-3.dtb-sun50i-h6-orangepi-3-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/Image?raw=true
+  job.name: stable-linux-5.3.y-v5.3.11-arm64-defconfig-gcc-8-sun50i-h6-orangepi-3.dtb-sun50i-h6-orangepi-3-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.11/arm64/defconfig/gcc-8/Image?raw=true
   job.kernel_image: Image?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.11/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/arm64/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/dtbs/allwinner/sun50i-h6-orangepi-3.dtb?raw=true
-  job.file_server_resource: mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.11/arm64/defconfig/gcc-8/dtbs/allwinner/sun50i-h6-orangepi-3.dtb?raw=true
+  job.file_server_resource: stable/linux-5.3.y/v5.3.11/arm64/defconfig/gcc-8
   job.build_environment: gcc-8
+
+
 
 
 
@@ -39,8 +42,12 @@ metadata:
 device_type: sun50i-h6-orangepi-3
 
 
+context:
+  extra_kernel_args: "console_msg_format=syslog"
 
-job_name: Health Check for sun50i-h6-orangepi-3 with v5.2-rc6-15-g249155c20f9b
+
+
+job_name: Health Check for sun50i-h6-orangepi-3 with v5.3.11
 timeouts:
   job:
     minutes: 10
@@ -62,16 +69,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.11/arm64/defconfig/gcc-8/Image?raw=true
       type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/arm64/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.11/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.2-rc6-15-g249155c20f9b/arm64/defconfig/gcc-8/dtbs/allwinner/sun50i-h6-orangepi-3.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.11/arm64/defconfig/gcc-8/dtbs/allwinner/sun50i-h6-orangepi-3.dtb?raw=true
     os: oe
 
 
