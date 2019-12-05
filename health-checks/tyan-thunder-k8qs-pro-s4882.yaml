@@ -1,0 +1,83 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.15/x86_64/x86_64_defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.3.15
+  kernel.endian: little
+  kernel.defconfig: x86_64_defconfig
+  kernel.defconfig_base: x86_64_defconfig
+  kernel.arch_defconfig: x86_64-x86_64_defconfig
+  platform.dtb: None
+  platform.dtb_short: None
+  platform.fastboot: false
+  platform.name: tyan-thunder-k8qs-pro-s4882
+  platform.mach: x86
+  test.plan: boot
+  test.plan_variant: 
+  git.commit: 8539dfa4fcbcf58c3c2f92ac57b964add884d12b
+  git.describe: v5.3.15
+  git.branch: linux-5.3.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  device.type: tyan-thunder-k8qs-pro-s4882
+  job.arch: x86_64
+  job.name: stable-linux-5.3.y-v5.3.15-x86_64-x86_64_defconfig-gcc-8-no-dtb-tyan-thunder-k8qs-pro-s4882-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.15/x86_64/x86_64_defconfig/gcc-8/bzImage?raw=true
+  job.kernel_image: bzImage?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.15/x86_64/x86_64_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/x86/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: None
+  job.file_server_resource: stable/linux-5.3.y/v5.3.15/x86_64/x86_64_defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+device_type: tyan-thunder-k8qs-pro-s4882
+
+
+
+job_name: Health Check for tyan-thunder-k8qs-pro-s4882 with v5.3.15
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: high
+visibility: public
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 10
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.15/x86_64/x86_64_defconfig/gcc-8/bzImage?raw=true
+      type: bzimage
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/x86/base/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.3.y/v5.3.15/x86_64/x86_64_defconfig/gcc-8/modules.tar.xz?raw=true
+      compression: xz
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: grub
+    commands: ramdisk
+    prompts:
+      - '/ #'
