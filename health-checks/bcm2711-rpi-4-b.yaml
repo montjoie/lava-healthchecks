@@ -1,0 +1,154 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.5-rc6/arm64/defconfig/gcc-8/
+  kernel.tree: mainline
+  kernel.version: v5.5-rc6
+  kernel.endian: little
+  kernel.defconfig: defconfig
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: arm64-defconfig
+  platform.dtb: broadcom/bcm2711-rpi-4-b.dtb
+  platform.dtb_short: bcm2711-rpi-4-b.dtb
+  platform.fastboot: false
+  platform.name: bcm2711-rpi-4-b
+  platform.mach: broadcom
+  test.plan: baseline
+  test.plan_variant: baseline
+  git.commit: b3a987b0264d3ddbb24293ebff10eddfc472f653
+  git.describe: v5.5-rc6
+  git.branch: master
+  git.url: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  device.type: bcm2711-rpi-4-b
+  job.arch: arm64
+  job.name: mainline-master-v5.5-rc6-arm64-defconfig-gcc-8-bcm2711-rpi-4-b.dtb-bcm2711-rpi-4-b-baseline
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.5-rc6/arm64/defconfig/gcc-8/Image?raw=true
+  job.kernel_image: Image
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.5-rc6/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/arm64/baseline/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.5-rc6/arm64/defconfig/gcc-8/dtbs/broadcom/bcm2711-rpi-4-b.dtb?raw=true
+  job.file_server_resource: mainline/master/v5.5-rc6/arm64/defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+
+
+device_type: bcm2711-rpi-4-b
+
+
+context:
+  extra_kernel_args: console_msg_format=syslog
+
+
+
+job_name: Health Check for bcm2711-rpi-4-b with v5.5-rc6
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: medium
+visibility: public
+
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 10
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.5-rc6/arm64/defconfig/gcc-8/Image?raw=true
+      type: image
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/arm64/baseline/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.5-rc6/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v5.5-rc6/arm64/defconfig/gcc-8/dtbs/broadcom/bcm2711-rpi-4-b.dtb?raw=true
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - '/ #'
+
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - >
+                for level in warn err; do
+                  dmesg --level=$level --notime -x -k > dmesg.$level
+                done
+            - >
+                for level in crit alert emerg; do
+                  dmesg --level=$level --notime -x -k > dmesg.$level
+                  test -s dmesg.$level && res=fail || res=pass
+                  count=$(cat dmesg.$level | wc -l)
+                  lava-test-case $level \
+                    --result $res \
+                    --measurement $count \
+                    --units lines
+                done
+            - cat dmesg.emerg dmesg.alert dmesg.crit dmesg.err dmesg.warn
+      from: inline
+      name: dmesg
+      path: inline/dmesg.yaml
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - export PATH=/opt/bootrr/helpers:$PATH
+            - cd /opt/bootrr && sh helpers/bootrr-auto
+      lava-signal: kmsg
+      from: inline
+      name: bootrr
+      path: inline/bootrr.yaml
+
