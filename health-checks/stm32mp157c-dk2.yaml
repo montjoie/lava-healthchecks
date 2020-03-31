@@ -1,0 +1,164 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.28/arm/multi_v7_defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.4.28
+  kernel.endian: little
+  kernel.defconfig: multi_v7_defconfig
+  kernel.defconfig_base: multi_v7_defconfig
+  kernel.arch_defconfig: arm-multi_v7_defconfig
+  platform.dtb: dtbs/stm32mp157c-dk2.dtb
+  platform.dtb_short: stm32mp157c-dk2.dtb
+  platform.fastboot: false
+  platform.name: stm32mp157c-dk2
+  platform.mach: stm32
+  test.plan: baseline
+  test.plan_variant: baseline
+  git.commit: 462afcd6e7ea94a7027a96a3bb12d0140b0b4216
+  git.describe: v5.4.28
+  git.branch: linux-5.4.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  device.type: stm32mp157c-dk2
+  job.arch: arm
+  job.name: stable-linux-5.4.y-v5.4.28-arm-multi_v7_defconfig-gcc-8-stm32mp157c-dk2.dtb-stm32mp157c-dk2-baseline
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.28/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
+  job.kernel_image: zImage
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.28/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-9-g25091c539382/armel/baseline/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.28/arm/multi_v7_defconfig/gcc-8/dtbs/stm32mp157c-dk2.dtb?raw=true
+  job.file_server_resource: stable/linux-5.4.y/v5.4.28/arm/multi_v7_defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+
+
+device_type: stm32mp157c-dk2
+
+
+context:
+  extra_kernel_args: console_msg_format=syslog
+
+
+notify:
+  criteria:
+    status: finished
+  callback:
+    url: https://api.staging.kernelci.org//callback/lava/test?lab_name=localhost&status={STATUS}&status_string={STATUS_STRING}
+    method: POST
+    dataset: all
+    token: kernel-ci-callback
+    content-type: json
+
+
+job_name: Health Check for stm32mp157c-dk2 with v5.4.28
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: medium
+visibility: public
+
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 10
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.28/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
+      type: zimage
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-9-g25091c539382/armel/baseline/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.28/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.28/arm/multi_v7_defconfig/gcc-8/dtbs/stm32mp157c-dk2.dtb?raw=true
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - '/ #'
+
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - >
+                for level in warn err; do
+                  dmesg --level=$level --notime -x -k > dmesg.$level
+                done
+            - >
+                for level in crit alert emerg; do
+                  dmesg --level=$level --notime -x -k > dmesg.$level
+                  test -s dmesg.$level && res=fail || res=pass
+                  count=$(cat dmesg.$level | wc -l)
+                  lava-test-case $level \
+                    --result $res \
+                    --measurement $count \
+                    --units lines
+                done
+            - cat dmesg.emerg dmesg.alert dmesg.crit dmesg.err dmesg.warn
+      from: inline
+      name: dmesg
+      path: inline/dmesg.yaml
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - export PATH=/opt/bootrr/helpers:$PATH
+            - cd /opt/bootrr && sh helpers/bootrr-auto
+      lava-signal: kmsg
+      from: inline
+      name: bootrr
+      path: inline/bootrr.yaml
+
