@@ -130,6 +130,57 @@ actions:
 
 - test:
     timeout:
+      minutes: 10
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - echo "==DRIVER_DUMP==" > driverlist
+            - echo "==VERSION=2==" >> driverlist
+            - echo "drivers:" >> driverlist
+            - >
+               find /sys/bus/*/drivers -mindepth 1 -maxdepth 1 | while read driver;do
+                 echo "  - driver: $(basename "$driver")" >> driverlist
+                 find "$driver" -type l |grep -v '/module$' > list
+                 if [ ! -s list ];then
+                   continue
+                 fi
+                 echo "  - list:" >> driverlist
+                 cat list | while read ff;do
+                   if [ ! -L "$driver/$ff" ];then
+                     continue
+                   fi
+                   readlink "$ff" |grep -q devices
+                   if [ $? -eq 0 ];then
+                     echo "    - bind: $ff" >> driverlist
+                     grep -q "^OF_COMPATIBLE_N" "$ff/uevent"
+                     if [ $? -eq 0 ];then
+                       echo "      compatible:"
+                       grep "OF_COMPATIBLE_[0-9]" "$ff/uevent" | cut -d= -f2 | while read compatible;do
+                         echo "        - $compatible" >> driverlist
+                       done
+                     fi
+                   fi
+                 done
+               done
+            - echo "==DRIVER_DUMP_END==" >> driverlist
+            - cat driverlist
+      from: inline
+      name: drivers
+      path: inline/drivers.yaml
+
+- test:
+    timeout:
       minutes: 1
     definitions:
     - repository:

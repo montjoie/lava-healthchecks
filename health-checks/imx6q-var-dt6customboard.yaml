@@ -3,9 +3,9 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.30/arm/multi_v7_defconfig/gcc-8/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.40/arm/multi_v7_defconfig/gcc-8/
   kernel.tree: stable
-  kernel.version: v5.4.30
+  kernel.version: v5.4.40
   kernel.endian: little
   kernel.defconfig: multi_v7_defconfig
   kernel.defconfig_base: multi_v7_defconfig
@@ -17,20 +17,20 @@ metadata:
   platform.mach: imx
   test.plan: baseline
   test.plan_variant: baseline
-  git.commit: ad13e142e024aa194016a32de8b9ba058fe9a6af
-  git.describe: v5.4.30
+  git.commit: f015b86259a520ad886523d9ec6fdb0ed80edc38
+  git.describe: v5.4.40
   git.branch: linux-5.4.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: imx6q-var-dt6customboard
   job.arch: arm
-  job.name: stable-linux-5.4.y-v5.4.30-arm-multi_v7_defconfig-gcc-8-imx6q-var-dt6customboard.dtb-imx6q-var-dt6customboard-baseline
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.30/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
+  job.name: stable-linux-5.4.y-v5.4.40-arm-multi_v7_defconfig-gcc-8-imx6q-var-dt6customboard.dtb-imx6q-var-dt6customboard-baseline
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.40/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
   job.kernel_image: zImage
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.30/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.40/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
   job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-9-g25091c539382/armel/baseline/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.30/arm/multi_v7_defconfig/gcc-8/dtbs/imx6q-var-dt6customboard.dtb?raw=true
-  job.file_server_resource: stable/linux-5.4.y/v5.4.30/arm/multi_v7_defconfig/gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.40/arm/multi_v7_defconfig/gcc-8/dtbs/imx6q-var-dt6customboard.dtb?raw=true
+  job.file_server_resource: stable/linux-5.4.y/v5.4.40/arm/multi_v7_defconfig/gcc-8
   job.build_environment: gcc-8
 
 
@@ -47,7 +47,7 @@ context:
 
 
 
-job_name: Health Check for imx6q-var-dt6customboard with v5.4.30
+job_name: Health Check for imx6q-var-dt6customboard with v5.4.40
 timeouts:
   job:
     minutes: 10
@@ -70,16 +70,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.30/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.40/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
       type: zimage
     ramdisk:
       url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-9-g25091c539382/armel/baseline/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.30/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.40/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.30/arm/multi_v7_defconfig/gcc-8/dtbs/imx6q-var-dt6customboard.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.40/arm/multi_v7_defconfig/gcc-8/dtbs/imx6q-var-dt6customboard.dtb?raw=true
     os: oe
 
 
