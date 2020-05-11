@@ -10,26 +10,26 @@ metadata:
   kernel.defconfig: defconfig
   kernel.defconfig_base: defconfig
   kernel.arch_defconfig: arm64-defconfig
-  platform.dtb: dtbs/broadcom/bcm2711-rpi-4-b.dtb
-  platform.dtb_short: bcm2711-rpi-4-b.dtb
+  platform.dtb: dtbs/allwinner/sun50i-h6-pine-h64-model-b.dtb
+  platform.dtb_short: sun50i-h6-pine-h64-model-b.dtb
   platform.fastboot: false
-  platform.name: bcm2711-rpi-4-b
-  platform.mach: broadcom
+  platform.name: sun50i-h6-pine-h64-model-b
+  platform.mach: allwinner
   test.plan: boot
   test.plan_variant: boot
   git.commit: c4bbda210077280030b01adf17d2a5fb39ace668
   git.describe: v5.6.12
   git.branch: linux-5.6.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
-  device.type: bcm2711-rpi-4-b
+  device.type: sun50i-h6-pine-h64-model-b
   job.arch: arm64
-  job.name: stable-linux-5.6.y-v5.6.12-arm64-defconfig-gcc-8-bcm2711-rpi-4-b.dtb-bcm2711-rpi-4-b-boot
+  job.name: stable-linux-5.6.y-v5.6.12-arm64-defconfig-gcc-8-sun50i-h6-pine-h64-model-b.dtb-sun50i-h6-pine-h64-model-b-boot
   job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/Image?raw=true
   job.kernel_image: Image
   job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
   job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/arm64/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/dtbs/broadcom/bcm2711-rpi-4-b.dtb?raw=true
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/dtbs/allwinner/sun50i-h6-pine-h64-model-b.dtb?raw=true
   job.file_server_resource: stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8
   job.build_environment: gcc-8
 
@@ -39,7 +39,7 @@ metadata:
 
 
 
-device_type: bcm2711-rpi-4-b
+device_type: sun50i-h6-pine-h64-model-b
 
 
 context:
@@ -47,7 +47,7 @@ context:
 
 
 
-job_name: Health Check for bcm2711-rpi-4-b with v5.6.12
+job_name: Health Check for sun50i-h6-pine-h64-model-b with v5.6.12
 timeouts:
   job:
     minutes: 10
@@ -78,7 +78,7 @@ actions:
       url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/dtbs/broadcom/bcm2711-rpi-4-b.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/dtbs/allwinner/sun50i-h6-pine-h64-model-b.dtb?raw=true
     os: oe
 
 

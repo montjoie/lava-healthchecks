@@ -3,34 +3,37 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/multi_v7_defconfig/gcc-8/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/
   kernel.tree: stable
-  kernel.version: v5.0.21
+  kernel.version: v5.6.12
   kernel.endian: little
   kernel.defconfig: multi_v7_defconfig
   kernel.defconfig_base: multi_v7_defconfig
   kernel.arch_defconfig: arm-multi_v7_defconfig
-  platform.dtb: sun8i-h2-plus-libretech-all-h3-cc.dtb?raw=true
-  platform.dtb_short: sun8i-h2-plus-libretech-all-h3-cc.dtb?raw=true
+  platform.dtb: dtbs/sun8i-h2-plus-libretech-all-h3-cc.dtb
+  platform.dtb_short: sun8i-h2-plus-libretech-all-h3-cc.dtb
   platform.fastboot: false
   platform.name: sun8i-h2-plus-libretech-all-h3-cc
   platform.mach: allwinner
-  test.plan: boot
-  git.commit: fd1594eb706427cc0d88fdfc2c1dbecd5abe7a83
-  git.describe: v5.0.21
-  git.branch: linux-5.0.y
+  test.plan: baseline
+  test.plan_variant: baseline
+  git.commit: c4bbda210077280030b01adf17d2a5fb39ace668
+  git.describe: v5.6.12
+  git.branch: linux-5.6.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: sun8i-h2-plus-libretech-all-h3-cc
   job.arch: arm
-  job.name: stable-linux-5.0.y-v5.0.21-arm-multi_v7_defconfig-gcc-8-sun8i-h2-plus-libretech-all-h3-cc.dtb-sun8i-h2-plus-libretech-all-h3-cc-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
-  job.kernel_image: zImage?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.11/armel/base/rootfs.cpio.gz?raw=true
+  job.name: stable-linux-5.6.y-v5.6.12-arm-multi_v7_defconfig-gcc-8-sun8i-h2-plus-libretech-all-h3-cc.dtb-sun8i-h2-plus-libretech-all-h3-cc-baseline
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
+  job.kernel_image: zImage
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/armel/baseline/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/multi_v7_defconfig/gcc-8/dtbs/sun8i-h2-plus-libretech-all-h3-cc.dtb?raw=true
-  job.file_server_resource: stable/linux-5.0.y/v5.0.21/arm/multi_v7_defconfig/gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/dtbs/sun8i-h2-plus-libretech-all-h3-cc.dtb?raw=true
+  job.file_server_resource: stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8
   job.build_environment: gcc-8
+
+
 
 
 
@@ -39,8 +42,12 @@ metadata:
 device_type: sun8i-h2-plus-libretech-all-h3-cc
 
 
+context:
+  extra_kernel_args: console_msg_format=syslog
 
-job_name: Health Check for sun8i-h2-plus-libretech-all-h3-cc with v5.0.21
+
+
+job_name: Health Check for sun8i-h2-plus-libretech-all-h3-cc with v5.6.12
 timeouts:
   job:
     minutes: 10
@@ -49,8 +56,9 @@ timeouts:
   actions:
     power-off:
       seconds: 30
-priority: high
+priority: medium
 visibility: public
+
 
 
 
@@ -59,19 +67,19 @@ visibility: public
 actions:
 - deploy:
     timeout:
-       minutes: 10
+      minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
       type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.11/armel/base/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/armel/baseline/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.0.y/v5.0.21/arm/multi_v7_defconfig/gcc-8/dtbs/sun8i-h2-plus-libretech-all-h3-cc.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/dtbs/sun8i-h2-plus-libretech-all-h3-cc.dtb?raw=true
     os: oe
 
 
@@ -82,3 +90,51 @@ actions:
     commands: ramdisk
     prompts:
       - '/ #'
+
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - KERNELCI_LAVA=y /bin/sh /opt/kernelci/dmesg.sh
+      from: inline
+      name: dmesg
+      path: inline/dmesg.yaml
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - export PATH=/opt/bootrr/helpers:$PATH
+            - cd /opt/bootrr && sh helpers/bootrr-auto
+      lava-signal: kmsg
+      from: inline
+      name: bootrr
+      path: inline/bootrr.yaml
+
