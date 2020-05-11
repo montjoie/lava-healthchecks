@@ -3,34 +3,37 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/davinci_all_defconfig/gcc-8/
   kernel.tree: stable
-  kernel.version: v5.1.19
+  kernel.version: v5.6.12
   kernel.endian: little
   kernel.defconfig: davinci_all_defconfig
   kernel.defconfig_base: davinci_all_defconfig
   kernel.arch_defconfig: arm-davinci_all_defconfig
-  platform.dtb: da850-lcdk.dtb?raw=true
-  platform.dtb_short: da850-lcdk.dtb?raw=true
+  platform.dtb: dtbs/da850-lcdk.dtb
+  platform.dtb_short: da850-lcdk.dtb
   platform.fastboot: false
   platform.name: da850-lcdk
   platform.mach: davinci
   test.plan: boot
-  git.commit: 0d4f1b2afde8df3b0ca79818123a43a184a0e1ea
-  git.describe: v5.1.19
-  git.branch: linux-5.1.y
+  test.plan_variant: boot
+  git.commit: c4bbda210077280030b01adf17d2a5fb39ace668
+  git.describe: v5.6.12
+  git.branch: linux-5.6.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: da850-lcdk
   job.arch: arm
-  job.name: stable-linux-5.1.y-v5.1.19-arm-davinci_all_defconfig-gcc-8-da850-lcdk.dtb-da850-lcdk-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/zImage?raw=true
-  job.kernel_image: zImage?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
+  job.name: stable-linux-5.6.y-v5.6.12-arm-davinci_all_defconfig-gcc-8-da850-lcdk.dtb-da850-lcdk-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/davinci_all_defconfig/gcc-8/zImage?raw=true
+  job.kernel_image: zImage
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/davinci_all_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/armel/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/dtbs/da850-lcdk.dtb?raw=true
-  job.file_server_resource: stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/davinci_all_defconfig/gcc-8/dtbs/da850-lcdk.dtb?raw=true
+  job.file_server_resource: stable/linux-5.6.y/v5.6.12/arm/davinci_all_defconfig/gcc-8
   job.build_environment: gcc-8
+
+
 
 
 
@@ -39,8 +42,12 @@ metadata:
 device_type: da850-lcdk
 
 
+context:
+  extra_kernel_args: console_msg_format=syslog
 
-job_name: Health Check for da850-lcdk with v5.1.19
+
+
+job_name: Health Check for da850-lcdk with v5.6.12
 timeouts:
   job:
     minutes: 10
@@ -49,7 +56,7 @@ timeouts:
   actions:
     power-off:
       seconds: 30
-priority: high
+priority: medium
 visibility: public
 
 
@@ -62,16 +69,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/davinci_all_defconfig/gcc-8/zImage?raw=true
       type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/armel/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/davinci_all_defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.1.y/v5.1.19/arm/davinci_all_defconfig/gcc-8/dtbs/da850-lcdk.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/davinci_all_defconfig/gcc-8/dtbs/da850-lcdk.dtb?raw=true
     os: oe
 
 
