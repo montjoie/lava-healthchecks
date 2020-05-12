@@ -3,33 +3,34 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.15/arm/multi_v7_defconfig/gcc-8/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/
   kernel.tree: stable
-  kernel.version: v5.2.15
+  kernel.version: v5.6.12
   kernel.endian: little
   kernel.defconfig: multi_v7_defconfig
   kernel.defconfig_base: multi_v7_defconfig
   kernel.arch_defconfig: arm-multi_v7_defconfig
-  platform.dtb: sun4i-a10-olinuxino-lime.dtb?raw=true
-  platform.dtb_short: sun4i-a10-olinuxino-lime.dtb?raw=true
+  platform.dtb: dtbs/sun4i-a10-olinuxino-lime.dtb
+  platform.dtb_short: sun4i-a10-olinuxino-lime.dtb
   platform.fastboot: false
   platform.name: sun4i-a10-olinuxino-lime
   platform.mach: allwinner
   test.plan: boot
-  git.commit: 6e282ba6ff6bb52afa545d4a29a45bd2eb8a7f4c
-  git.describe: v5.2.15
-  git.branch: linux-5.2.y
+  test.plan_variant: boot
+  git.commit: c4bbda210077280030b01adf17d2a5fb39ace668
+  git.describe: v5.6.12
+  git.branch: linux-5.6.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: sun4i-a10-olinuxino-lime
   job.arch: arm
-  job.name: stable-linux-5.2.y-v5.2.15-arm-multi_v7_defconfig-gcc-8-sun4i-a10-olinuxino-lime.dtb-sun4i-a10-olinuxino-lime-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.15/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
-  job.kernel_image: zImage?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.15/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
+  job.name: stable-linux-5.6.y-v5.6.12-arm-multi_v7_defconfig-gcc-8-sun4i-a10-olinuxino-lime.dtb-sun4i-a10-olinuxino-lime-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
+  job.kernel_image: zImage
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/armel/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.15/arm/multi_v7_defconfig/gcc-8/dtbs/sun4i-a10-olinuxino-lime.dtb?raw=true
-  job.file_server_resource: stable/linux-5.2.y/v5.2.15/arm/multi_v7_defconfig/gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/dtbs/sun4i-a10-olinuxino-lime.dtb?raw=true
+  job.file_server_resource: stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8
   job.build_environment: gcc-8
 
 
@@ -42,11 +43,11 @@ device_type: sun4i-a10-olinuxino-lime
 
 
 context:
-  extra_kernel_args: "console_msg_format=syslog"
+  extra_kernel_args: console_msg_format=syslog
 
 
 
-job_name: Health Check for sun4i-a10-olinuxino-lime with v5.2.15
+job_name: Health Check for sun4i-a10-olinuxino-lime with v5.6.12
 timeouts:
   job:
     minutes: 10
@@ -55,7 +56,7 @@ timeouts:
   actions:
     power-off:
       seconds: 30
-priority: high
+priority: medium
 visibility: public
 
 
@@ -68,16 +69,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.15/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
       type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/armel/base/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/armel/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.15/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.2.y/v5.2.15/arm/multi_v7_defconfig/gcc-8/dtbs/sun4i-a10-olinuxino-lime.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/dtbs/sun4i-a10-olinuxino-lime.dtb?raw=true
     os: oe
 
 
