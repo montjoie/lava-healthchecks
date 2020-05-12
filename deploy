@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -e /etc/lava-server/dispatcher-config/health-checks/healthcheck_url ];then
+	cp -v health-checks/*yaml /etc/lava-server/dispatcher-config/health-checks/
+	sed -i "s,http.*blob/master,$(cat /etc/lava-server/dispatcher-config/health-checks/healthcheck_url)," /etc/lava-server/dispatcher-config/health-checks/*
+	sed -i 's,?.*$,,' /etc/lava-server/dispatcher-config/health-checks/*
+	exit 0
+fi
