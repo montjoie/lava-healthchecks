@@ -1,34 +1,97 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.6.12
+  kernel.endian: little
+  kernel.defconfig: sunxi_defconfig
+  kernel.defconfig_base: sunxi_defconfig
+  kernel.arch_defconfig: arm-sunxi_defconfig
+  platform.dtb: dtbs/sun9i-a80-cubieboard4.dtb
+  platform.dtb_short: sun9i-a80-cubieboard4.dtb
+  platform.fastboot: false
+  platform.name: sun9i-a80-cubieboard4
+  platform.mach: allwinner
+  test.plan: baseline
+  test.plan_variant: baseline
+  git.commit: c4bbda210077280030b01adf17d2a5fb39ace668
+  git.describe: v5.6.12
+  git.branch: linux-5.6.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  device.type: sun9i-a80-cubieboard4
+  job.arch: arm
+  job.name: stable-linux-5.6.y-v5.6.12-arm-sunxi_defconfig-gcc-8-sun9i-a80-cubieboard4.dtb-sun9i-a80-cubieboard4-baseline
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/zImage?raw=true
+  job.kernel_image: zImage
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-9-g25091c539382/armel/baseline/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/dtbs/sun9i-a80-cubieboard4.dtb?raw=true
+  job.file_server_resource: stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+
+
 device_type: sun9i-a80-cubieboard4
 
-job_name: Health test for sun9i-a80-cubieboard4 with v4.20.8
+
+context:
+  extra_kernel_args: console_msg_format=syslog
+
+
+notify:
+  criteria:
+    status: finished
+  callback:
+    url: https://api.staging.kernelci.org//callback/lava/test?lab_name=localhost&status={STATUS}&status_string={STATUS_STRING}
+    method: POST
+    dataset: all
+    token: kernel-ci-callback
+    content-type: json
+
+
+job_name: Health Check for sun9i-a80-cubieboard4 with v5.6.12
 timeouts:
   job:
     minutes: 10
   action:
-   minutes: 5
+   minutes: 10
   actions:
     power-off:
       seconds: 30
-priority: high
+priority: medium
 visibility: public
+
+
+
+
+
 
 actions:
 - deploy:
     timeout:
-       minutes: 10
+      minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.20.y/v4.20.8/arm/multi_v7_defconfig/gcc-7/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/zImage?raw=true
       type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-9-g25091c539382/armel/baseline/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.20.y/v4.20.8/arm/multi_v7_defconfig/gcc-7/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.20.y/v4.20.8/arm/multi_v7_defconfig/gcc-7/dtbs/sun9i-a80-cubieboard4.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/dtbs/sun9i-a80-cubieboard4.dtb?raw=true
     os: oe
+
 
 - boot:
     timeout:
@@ -36,5 +99,66 @@ actions:
     method: u-boot
     commands: ramdisk
     prompts:
-      - 'root@debian:~#'
       - '/ #'
+
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - >
+                for level in warn err; do
+                  dmesg --level=$level --notime -x -k > dmesg.$level
+                done
+            - >
+                for level in crit alert emerg; do
+                  dmesg --level=$level --notime -x -k > dmesg.$level
+                  test -s dmesg.$level && res=fail || res=pass
+                  count=$(cat dmesg.$level | wc -l)
+                  lava-test-case $level \
+                    --result $res \
+                    --measurement $count \
+                    --units lines
+                done
+            - cat dmesg.emerg dmesg.alert dmesg.crit dmesg.err dmesg.warn
+      from: inline
+      name: dmesg
+      path: inline/dmesg.yaml
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - export PATH=/opt/bootrr/helpers:$PATH
+            - cd /opt/bootrr && sh helpers/bootrr-auto
+      lava-signal: kmsg
+      from: inline
+      name: bootrr
+      path: inline/bootrr.yaml
+
