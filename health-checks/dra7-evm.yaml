@@ -1,63 +1,86 @@
+
+
+
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.15/arm/multi_v7_defconfig/
-  kernel.tree: mainline
-  kernel.version: v4.15
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.6.12
   kernel.endian: little
   kernel.defconfig: multi_v7_defconfig
   kernel.defconfig_base: multi_v7_defconfig
   kernel.arch_defconfig: arm-multi_v7_defconfig
-  platform.dtb: dra7-evm.dtb?raw=true
-  platform.dtb_short: dra7-evm.dtb?raw=true
+  platform.dtb: dtbs/dra7-evm.dtb
+  platform.dtb_short: dra7-evm.dtb
   platform.fastboot: false
   platform.name: dra7-evm
   platform.mach: omap2
   test.plan: boot
-  git.commit: 569dbb88e80deb68974ef6fdd6a13edb9d686261
-  git.describe: v4.15
-  git.branch: master
-  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  test.plan_variant: boot
+  git.commit: c4bbda210077280030b01adf17d2a5fb39ace668
+  git.describe: v5.6.12
+  git.branch: linux-5.6.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: dra7-evm
   job.arch: arm
-  job.name: mainline-master-v4.15-arm-multi_v7_defconfig-dra7-evm.dtb-dra7-evm-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.15/arm/multi_v7_defconfig/zImage?raw=true
-  job.kernel_image: zImage?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.15/arm/multi_v7_defconfig/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
+  job.name: stable-linux-5.6.y-v5.6.12-arm-multi_v7_defconfig-gcc-8-dra7-evm.dtb-dra7-evm-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
+  job.kernel_image: zImage
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/armel/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.15/arm/multi_v7_defconfig/dtbs/dra7-evm.dtb?raw=true
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/dtbs/dra7-evm.dtb?raw=true
+  job.file_server_resource: stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+
 
 device_type: dra7-evm
 
-job_name: mainline-master-v4.15-arm-multi_v7_defconfig-dra7-evm.dtb-dra7-evm-boot
+
+context:
+  extra_kernel_args: console_msg_format=syslog
+
+
+
+job_name: Health Check for dra7-evm with v5.6.12
 timeouts:
   job:
     minutes: 10
   action:
-   minutes: 5
+   minutes: 10
   actions:
     power-off:
       seconds: 30
-priority: high
+priority: medium
 visibility: public
+
+
+
+
 
 actions:
 - deploy:
     timeout:
-       minutes: 10
+      minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.15/arm/multi_v7_defconfig/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/zImage?raw=true
       type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/armel/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.15/arm/multi_v7_defconfig/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master//mainline/master/v4.15/arm/multi_v7_defconfig/dtbs/dra7-evm.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/multi_v7_defconfig/gcc-8/dtbs/dra7-evm.dtb?raw=true
     os: oe
+
 
 - boot:
     timeout:
@@ -65,6 +88,4 @@ actions:
     method: u-boot
     commands: ramdisk
     prompts:
-      - 'linaro-test'
-      - 'root@debian:~#'
       - '/ #'
