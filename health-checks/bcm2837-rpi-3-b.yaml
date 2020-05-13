@@ -1,43 +1,55 @@
+
+
+
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/
-  kernel.tree: mainline
-  kernel.version: v4.15
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.6.12
   kernel.endian: little
   kernel.defconfig: defconfig
   kernel.defconfig_base: defconfig
   kernel.arch_defconfig: arm64-defconfig
-  platform.dtb: broadcom/bcm2837-rpi-3-b.dtb?raw=true
-  platform.dtb_short: bcm2837-rpi-3-b.dtb?raw=true
+  platform.dtb: dtbs/broadcom/bcm2837-rpi-3-b.dtb
+  platform.dtb_short: bcm2837-rpi-3-b.dtb
   platform.fastboot: false
   platform.name: bcm2837-rpi-3-b
-  platform.mach: bcm
+  platform.mach: broadcom
   test.plan: boot
-  git.commit: 50c4c4e268a2d7a3e58ebb698ac74da0de40ae36
-  git.describe: v4.15
-  git.branch: master
-  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  test.plan_variant: boot
+  git.commit: c4bbda210077280030b01adf17d2a5fb39ace668
+  git.describe: v5.6.12
+  git.branch: linux-5.6.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: bcm2837-rpi-3-b
   job.arch: arm64
-  job.name: mainline-master-v4.15-arm64-defconfig-bcm2837-rpi-3-b.dtb-bcm2837-rpi-3-b-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/Image?raw=true
-  job.kernel_image: Image?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+  job.name: stable-linux-5.6.y-v5.6.12-arm64-defconfig-gcc-8-bcm2837-rpi-3-b.dtb-bcm2837-rpi-3-b-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/Image?raw=true
+  job.kernel_image: Image
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/arm64/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/dtbs/broadcom/bcm2837-rpi-3-b.dtb?raw=true
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/dtbs/broadcom/bcm2837-rpi-3-b.dtb?raw=true
+  job.file_server_resource: stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+
 
 device_type: bcm2837-rpi-3-b
 
+
 context:
-  test_character_delay: "10"
-  console_device: "ttyS1"
+  console_device: ttyS1
+  test_character_delay: 10
+  extra_kernel_args: console_msg_format=syslog
 
-notify:
-  criteria:
-    status: finished
 
-job_name: mainline-master-v4.15-arm64-defconfig-bcm2837-rpi-3-b.dtb-bcm2837-rpi-3-b-boot
+
+job_name: Health Check for bcm2837-rpi-3-b with v5.6.12
 timeouts:
   job:
     minutes: 10
@@ -49,23 +61,28 @@ timeouts:
 priority: medium
 visibility: public
 
+
+
+
+
 actions:
 - deploy:
     timeout:
-       minutes: 10
+      minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/Image?raw=true
       type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/arm64/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.15/arm64/defconfig/dtbs/broadcom/bcm2837-rpi-3-b.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/dtbs/broadcom/bcm2837-rpi-3-b.dtb?raw=true
     os: oe
+
 
 - boot:
     timeout:
@@ -73,6 +90,4 @@ actions:
     method: u-boot
     commands: ramdisk
     prompts:
-      - 'linaro-test'
-      - 'root@debian:~#'
       - '/ #'

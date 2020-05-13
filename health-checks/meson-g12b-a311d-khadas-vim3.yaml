@@ -3,34 +3,35 @@
 
 metadata:
   image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190904/arm64/defconfig/clang-8/
-  kernel.tree: next
-  kernel.version: next-20190904
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.6.12
   kernel.endian: little
   kernel.defconfig: defconfig
   kernel.defconfig_base: defconfig
   kernel.arch_defconfig: arm64-defconfig
-  platform.dtb: amlogic/meson-g12b-a311d-khadas-vim3.dtb?raw=true
-  platform.dtb_short: meson-g12b-a311d-khadas-vim3.dtb?raw=true
+  platform.dtb: dtbs/amlogic/meson-g12b-a311d-khadas-vim3.dtb
+  platform.dtb_short: meson-g12b-a311d-khadas-vim3.dtb
   platform.fastboot: false
   platform.name: meson-g12b-a311d-khadas-vim3
   platform.mach: amlogic
   test.plan: boot
-  git.commit: 35394d031b710e832849fca60d0f53b513f0c390
-  git.describe: next-20190904
-  git.branch: master
-  git.url: git://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+  test.plan_variant: boot
+  git.commit: c4bbda210077280030b01adf17d2a5fb39ace668
+  git.describe: v5.6.12
+  git.branch: linux-5.6.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: meson-g12b-a311d-khadas-vim3
   job.arch: arm64
-  job.name: next-master-next-20190904-arm64-defconfig-clang-8-meson-g12b-a311d-khadas-vim3.dtb-meson-g12b-a311d-khadas-vim3-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190904/arm64/defconfig/clang-8/Image?raw=true
-  job.kernel_image: Image?raw=true
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190904/arm64/defconfig/clang-8/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+  job.name: stable-linux-5.6.y-v5.6.12-arm64-defconfig-gcc-8-meson-g12b-a311d-khadas-vim3.dtb-meson-g12b-a311d-khadas-vim3-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/Image?raw=true
+  job.kernel_image: Image
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/arm64/base/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190904/arm64/defconfig/clang-8/dtbs/amlogic/meson-g12b-a311d-khadas-vim3.dtb?raw=true
-  job.file_server_resource: next/master/next-20190904/arm64/defconfig/clang-8
-  job.build_environment: clang-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12b-a311d-khadas-vim3.dtb?raw=true
+  job.file_server_resource: stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8
+  job.build_environment: gcc-8
 
 
 
@@ -42,11 +43,11 @@ device_type: meson-g12b-a311d-khadas-vim3
 
 
 context:
-  extra_kernel_args: "console_msg_format=syslog"
+  extra_kernel_args: console_msg_format=syslog
 
 
 
-job_name: Health Check for meson-g12b-a311d-khadas-vim3 with next-20190904
+job_name: Health Check for meson-g12b-a311d-khadas-vim3 with v5.6.12
 timeouts:
   job:
     minutes: 10
@@ -55,7 +56,7 @@ timeouts:
   actions:
     power-off:
       seconds: 30
-priority: high
+priority: medium
 visibility: public
 
 
@@ -68,16 +69,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190904/arm64/defconfig/clang-8/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/Image?raw=true
       type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-2-gefc755ba4a02/arm64/base/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/arm64/base/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190904/arm64/defconfig/clang-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20190904/arm64/defconfig/clang-8/dtbs/amlogic/meson-g12b-a311d-khadas-vim3.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/dtbs/amlogic/meson-g12b-a311d-khadas-vim3.dtb?raw=true
     os: oe
 
 
