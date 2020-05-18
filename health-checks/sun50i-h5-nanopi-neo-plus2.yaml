@@ -46,15 +46,6 @@ context:
   extra_kernel_args: console_msg_format=syslog
 
 
-notify:
-  criteria:
-    status: finished
-  callback:
-    url: https://api.staging.kernelci.org//callback/lava/test?lab_name=lab-clabbe&status={STATUS}&status_string={STATUS_STRING}
-    method: POST
-    dataset: all
-    token: kernel-ci-callback
-    content-type: json
 
 
 job_name: Health Check for sun50i-h5-nanopi-neo-plus2 with v5.6.12

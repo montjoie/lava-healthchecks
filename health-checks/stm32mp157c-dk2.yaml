@@ -46,15 +46,6 @@ context:
   extra_kernel_args: console_msg_format=syslog
 
 
-notify:
-  criteria:
-    status: finished
-  callback:
-    url: https://api.staging.kernelci.org//callback/lava/test?lab_name=localhost&status={STATUS}&status_string={STATUS_STRING}
-    method: POST
-    dataset: all
-    token: kernel-ci-callback
-    content-type: json
 
 
 job_name: Health Check for stm32mp157c-dk2 with v5.4.28

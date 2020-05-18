@@ -29,10 +29,6 @@ metadata:
 
 device_type: sun50i-a64-pine64
 
-notify:
-  criteria:
-    status: finished
-
 job_name: mainline-master-v4.17-rc6-arm64-defconfig-sun50i-a64-pine64.dtb-sun8i-h2-plus-orangepi-zero-boot
 timeouts:
   job:
