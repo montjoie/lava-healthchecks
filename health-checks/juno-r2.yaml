@@ -2,35 +2,32 @@
 
 
 metadata:
-  image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.17/arm64/defconfig/gcc-8/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.8.y/v5.8.18/arm64/defconfig/gcc-8/
   kernel.tree: stable
-  kernel.version: v5.4.17
+  kernel.version: v5.8.18
   kernel.endian: little
   kernel.defconfig: defconfig
-  kernel.defconfig_base: defconfig
-  kernel.arch_defconfig: arm64-defconfig
-  platform.dtb: arm/juno-r2.dtb
+  kernel.defconfig_full: defconfig
+  platform.dtb: dtbs/arm/juno-r2.dtb
   platform.dtb_short: juno-r2.dtb
   platform.fastboot: false
-  platform.name: juno-r2
   platform.mach: arm
   test.plan: baseline
   test.plan_variant: baseline
-  git.commit: 313c8460cf0290fb1b9f71a20573fc32ac6c9cee
-  git.describe: v5.4.17
-  git.branch: linux-5.4.y
+  git.commit: ab435ce49bd1d02e33dfec24f76955dc1196970b
+  git.describe: v5.8.18
+  git.branch: linux-5.8.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: juno-r2
   job.arch: arm64
-  job.name: stable-linux-5.4.y-v5.4.17-arm64-defconfig-gcc-8-juno-r2.dtb-juno-r2-baseline
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.17/arm64/defconfig/gcc-8/Image?raw=true
+  job.name: stable-linux-5.8.y-v5.8.18-arm64-defconfig-gcc-8-juno-r2.dtb-juno-r2-baseline
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.8.y/v5.8.18/arm64/defconfig/gcc-8/Image?raw=true
   job.kernel_image: Image
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.17/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/arm64/baseline/rootfs.cpio.gz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.8.y/v5.8.18/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2020.05-3-g27eeeac7da2d/arm64/baseline/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.17/arm64/defconfig/gcc-8/dtbs/arm/juno-r2.dtb?raw=true
-  job.file_server_resource: stable/linux-5.4.y/v5.4.17/arm64/defconfig/gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.8.y/v5.8.18/arm64/defconfig/gcc-8/dtbs/arm/juno-r2.dtb?raw=true
+  job.file_server_resource: stable/linux-5.8.y/v5.8.18/arm64/defconfig/gcc-8
   job.build_environment: gcc-8
 
 
@@ -47,7 +44,7 @@ context:
 
 
 
-job_name: Health Check for juno-r2 with v5.4.17
+job_name: Health Check for juno-r2 with v5.8.18
 timeouts:
   job:
     minutes: 10
@@ -70,16 +67,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.17/arm64/defconfig/gcc-8/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.8.y/v5.8.18/arm64/defconfig/gcc-8/Image?raw=true
       type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-8-gd700ebb99e8f/arm64/baseline/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2020.05-3-g27eeeac7da2d/arm64/baseline/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.17/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.8.y/v5.8.18/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.4.y/v5.4.17/arm64/defconfig/gcc-8/dtbs/arm/juno-r2.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.8.y/v5.8.18/arm64/defconfig/gcc-8/dtbs/arm/juno-r2.dtb?raw=true
     os: oe
 
 
@@ -109,60 +106,10 @@ actions:
             - lava-test-shell
         run:
           steps:
-            - >
-                for level in warn err; do
-                  dmesg --level=$level --notime -x -k > dmesg.$level
-                done
-            - >
-                for level in crit alert emerg; do
-                  dmesg --level=$level --notime -x -k > dmesg.$level
-                  test -s dmesg.$level && res=fail || res=pass
-                  count=$(cat dmesg.$level | wc -l)
-                  lava-test-case $level \
-                    --result $res \
-                    --measurement $count \
-                    --units lines
-                done
-            - cat dmesg.emerg dmesg.alert dmesg.crit dmesg.err dmesg.warn
+            - KERNELCI_LAVA=y /bin/sh /opt/kernelci/dmesg.sh
       from: inline
       name: dmesg
       path: inline/dmesg.yaml
-
-- test:
-    timeout:
-      minutes: 1
-    definitions:
-    - repository:
-        metadata:
-          format: Lava-Test Test Definition 1.0
-          name: baseline
-          description: "baseline test plan"
-          os:
-            - debian
-          scope:
-            - functional
-          environment:
-            - lava-test-shell
-        run:
-          steps:
-            - echo "==DRIVER_DUMP==" > driverlist
-            - echo "==VERSION=0==" >> driverlist
-            - echo "drivers:" >> driverlist
-            - >
-               for line in $(find /sys/devices/ -name uevent |xargs grep -l ^DRIVER); do
-                 echo "  - driver: $(grep ^DRIVER= "$line" |cut -d= -f2)" >> driverlist
-                 if [ ! -z $(grep ^OF_COMPATIBLE_N= "$line") ];then
-                   echo "    compatibles:" >> driverlist
-                   for compatible in $(grep ^OF_COMPATIBLE_[0-9]*= "$line" | cut -d= -f2); do
-                     echo "      - $compatible" >> driverlist
-                   done
-                 fi
-               done
-            - echo "==DRIVER_DUMP_END==" >> driverlist
-            - cat driverlist
-      from: inline
-      name: drivers
-      path: inline/drivers.yaml
 
 - test:
     timeout:
