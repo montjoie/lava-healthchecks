@@ -1,0 +1,91 @@
+
+
+
+metadata:
+  image.type: 'kernel-ci'
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20200602/arm64/defconfig/gcc-8/
+  kernel.tree: next
+  kernel.version: next-20200602
+  kernel.endian: little
+  kernel.defconfig: defconfig
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: arm64-defconfig
+  platform.dtb: dtbs/amlogic/meson-sm1-odroid-c4.dtb
+  platform.dtb_short: meson-sm1-odroid-c4.dtb
+  platform.fastboot: false
+  platform.name: meson-sm1-odroid-c4
+  platform.mach: amlogic
+  test.plan: boot
+  test.plan_variant: boot
+  git.commit: 0e21d4620dd047da7952f44a2e1ac777ded2d57e
+  git.describe: next-20200602
+  git.branch: master
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+  device.type: meson-sm1-odroid-c4
+  job.arch: arm64
+  job.name: next-master-next-20200602-arm64-defconfig-gcc-8-meson-sm1-odroid-c4.dtb-meson-sm1-odroid-c4-boot
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20200602/arm64/defconfig/gcc-8/Image?raw=true
+  job.kernel_image: Image
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20200602/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/arm64/base/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20200602/arm64/defconfig/gcc-8/dtbs/amlogic/meson-sm1-odroid-c4.dtb?raw=true
+  job.file_server_resource: next/master/next-20200602/arm64/defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+
+
+device_type: meson-sm1-odroid-c4
+
+
+context:
+  extra_kernel_args: console_msg_format=syslog
+
+
+
+job_name: Health Check for meson-sm1-odroid-c4 with next-20200602
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: medium
+visibility: public
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 10
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20200602/arm64/defconfig/gcc-8/Image?raw=true
+      type: image
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/arm64/base/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20200602/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20200602/arm64/defconfig/gcc-8/dtbs/amlogic/meson-sm1-odroid-c4.dtb?raw=true
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - '/ #'
