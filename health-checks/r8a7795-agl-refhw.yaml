@@ -1,0 +1,47 @@
+device_type: r8a7795-agl-refhw
+
+job_name: Health Check for r8a7795-agl-refhw
+
+timeouts:
+  job:
+    minutes: 150
+  action:
+    minutes: 30
+  connection:
+    minutes: 15
+  connections:
+    lava-test-shell:
+      minutes: 15
+
+priority: medium
+visibility: public
+
+actions:
+
+- deploy:
+    timeout:
+      minutes: 90
+    to: tftp
+    os: oe
+    failure_retry: 2
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/aglrefhw/Image?raw=true
+      type: image
+      sha256sum: fe49dd432ec26cad74258f7f9a639a601fef68698dbe0ea0c647c2e163fc74a0
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/aglrefhw/r8a7795-agl-refhw--5.4.0+git0+289de10299-r1-h3ulcb-20201210131503.dtb?raw=true
+      sha256sum: e25571abe798349b22ddb0d1e560a499b94814724288b6a6e713b6e1f0759871
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2018.11/arm64/base/rootfs.cpio.gz?raw=true
+      compression: gz
+
+- boot:
+    timeout:
+      minutes: 20
+    method: u-boot
+    prompts:
+      - "root@h3ulcb:~"
+      - "h3ulcb:~#"
+      - '/ #'
+
+    commands: ramdisk
