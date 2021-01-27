@@ -2,35 +2,32 @@
 
 
 metadata:
-  image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.10/arm64/defconfig/gcc-8/
   kernel.tree: stable
-  kernel.version: v5.6.12
+  kernel.version: v5.10.10
   kernel.endian: little
   kernel.defconfig: defconfig
-  kernel.defconfig_base: defconfig
-  kernel.arch_defconfig: arm64-defconfig
+  kernel.defconfig_full: defconfig
   platform.dtb: dtbs/broadcom/bcm2711-rpi-4-b.dtb
   platform.dtb_short: bcm2711-rpi-4-b.dtb
   platform.fastboot: false
-  platform.name: bcm2711-rpi-4-b
   platform.mach: broadcom
-  test.plan: boot
-  test.plan_variant: boot
-  git.commit: c4bbda210077280030b01adf17d2a5fb39ace668
-  git.describe: v5.6.12
-  git.branch: linux-5.6.y
+  test.plan: baseline
+  test.plan_variant: baseline
+  git.commit: 8dc0fcbcfa97bdeb514fa229125791a467e0e319
+  git.describe: v5.10.10
+  git.branch: linux-5.10.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: bcm2711-rpi-4-b
   job.arch: arm64
-  job.name: stable-linux-5.6.y-v5.6.12-arm64-defconfig-gcc-8-bcm2711-rpi-4-b.dtb-bcm2711-rpi-4-b-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/Image?raw=true
+  job.name: stable-linux-5.10.y-v5.10.10-arm64-defconfig-gcc-8-bcm2711-rpi-4-b.dtb-bcm2711-rpi-4-b-baseline
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.10/arm64/defconfig/gcc-8/Image?raw=true
   job.kernel_image: Image
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/arm64/base/rootfs.cpio.gz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.10/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2020.05-4-g97706c5d9567/arm64/baseline/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/dtbs/broadcom/bcm2711-rpi-4-b.dtb?raw=true
-  job.file_server_resource: stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.10/arm64/defconfig/gcc-8/dtbs/broadcom/bcm2711-rpi-4-b.dtb?raw=true
+  job.file_server_resource: stable/linux-5.10.y/v5.10.10/arm64/defconfig/gcc-8
   job.build_environment: gcc-8
 
 
@@ -47,7 +44,7 @@ context:
 
 
 
-job_name: Health Check for bcm2711-rpi-4-b with v5.6.12
+job_name: Health Check for bcm2711-rpi-4-b with v5.10.10
 timeouts:
   job:
     minutes: 10
@@ -63,22 +60,23 @@ visibility: public
 
 
 
+
 actions:
 - deploy:
     timeout:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.10/arm64/defconfig/gcc-8/Image?raw=true
       type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-11-g17e793fa4728/arm64/base/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2020.05-4-g97706c5d9567/arm64/baseline/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.10/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/dtbs/broadcom/bcm2711-rpi-4-b.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.10/arm64/defconfig/gcc-8/dtbs/broadcom/bcm2711-rpi-4-b.dtb?raw=true
     os: oe
 
 
@@ -89,3 +87,51 @@ actions:
     commands: ramdisk
     prompts:
       - '/ #'
+
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - KERNELCI_LAVA=y /bin/sh /opt/kernelci/dmesg.sh
+      from: inline
+      name: dmesg
+      path: inline/dmesg.yaml
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - export PATH=/opt/bootrr/helpers:$PATH
+            - cd /opt/bootrr && sh helpers/bootrr-auto
+      lava-signal: kmsg
+      from: inline
+      name: bootrr
+      path: inline/bootrr.yaml
+
