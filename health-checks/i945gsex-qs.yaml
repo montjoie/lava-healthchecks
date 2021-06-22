@@ -1,0 +1,140 @@
+
+
+
+metadata:
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.41/i386/i386_defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.10.41
+  kernel.endian: little
+  kernel.defconfig: i386_defconfig
+  kernel.defconfig_full: i386_defconfig
+  platform.dtb: None
+  platform.dtb_short: None
+  platform.fastboot: false
+  platform.mach: x86
+  test.plan: baseline
+  test.plan_variant: baseline
+  git.commit: 33069919e2dce440d3b8cd101b18f37bb35bdddf
+  git.describe: v5.10.41
+  git.branch: linux-5.10.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  device.type: i945gsex-qs
+  job.arch: i386
+  job.name: stable-linux-5.10.y-v5.10.41-i386-i386_defconfig-gcc-8-no-dtb-i945gsex-qs-baseline
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.41/i386/i386_defconfig/gcc-8/kernel/bzImage?raw=true
+  job.kernel_image: bzImage
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.41/i386/i386_defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2020.05-5-g2f114cc7102b/x86/baseline/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: None
+  job.file_server_resource: stable/linux-5.10.y/v5.10.41/i386/i386_defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+device_type: i945gsex-qs
+
+
+notify:
+  criteria:
+    status: finished
+  callback:
+    url: http://kernelci.dev.baylibre.com:8081/callback/?lab_name=lab-clabbe&status={STATUS}&status_string={STATUS_STRING}
+    method: POST
+    dataset: all
+    token: lab-agl-core-callback-baylibre-dev
+    content-type: json
+
+
+job_name: Health Check for i945gsex-qs with v5.10.41
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: medium
+visibility: public
+
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 10
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.41/i386/i386_defconfig/gcc-8/kernel/bzImage?raw=true
+      type: bzimage
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2020.05-5-g2f114cc7102b/x86/baseline/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.41/i386/i386_defconfig/gcc-8/modules.tar.xz?raw=true
+      compression: xz
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: grub
+    commands: ramdisk
+    prompts:
+      - '/ #'
+
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - KERNELCI_LAVA=y /bin/sh /opt/kernelci/dmesg.sh
+      lava-signal: kmsg
+      from: inline
+      name: dmesg
+      path: inline/dmesg.yaml
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - export PATH=/opt/bootrr/helpers:$PATH
+            - cd /opt/bootrr && sh helpers/bootrr-auto
+      lava-signal: kmsg
+      from: inline
+      name: bootrr
+      path: inline/bootrr.yaml
+
