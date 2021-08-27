@@ -1,63 +1,94 @@
+
+
+
 metadata:
-  image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/
-  kernel.tree: mainline
-  kernel.version: v4.16
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.61/arm64/defconfig/gcc-8/
+  kernel.tree: stable
+  kernel.version: v5.10.61
   kernel.endian: little
   kernel.defconfig: defconfig
-  kernel.defconfig_base: defconfig
-  kernel.arch_defconfig: arm64-defconfig
-  platform.dtb: amlogic/meson-gxl-s905d-p230.dtb
+  kernel.defconfig_full: defconfig
+  platform.dtb: dtbs/amlogic/meson-gxl-s905d-p230.dtb
   platform.dtb_short: meson-gxl-s905d-p230.dtb
   platform.fastboot: false
-  platform.name: meson-gxl-s905d-p230
   platform.mach: amlogic
-  test.plan: boot
-  git.commit: 569dbb88e80deb68974ef6fdd6a13edb9d686261
-  git.describe: v4.16
-  git.branch: master
-  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  test.plan: baseline
+  test.plan_variant: baseline
+  git.commit: 452ea6a15ed2ac74789b7b3513777cc94ea3b751
+  git.describe: v5.10.61
+  git.branch: linux-5.10.y
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: meson-gxl-s905d-p230
   job.arch: arm64
-  job.name: mainline-master-v4.16-arm64-defconfig-meson-gxl-s905d-p230.dtb-meson-gxbb-p200-boot
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/Image?raw=true
+  job.name: stable-linux-5.10.y-v5.10.61-arm64-defconfig-gcc-8-meson-gxl-s905d-p230.dtb-meson-gxl-s905d-p230-baseline
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.61/arm64/defconfig/gcc-8/kernel/Image?raw=true
   job.kernel_image: Image
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.61/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2020.05-6-g8983f3b738df/arm64/baseline/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/dtbs/amlogic/meson-gxl-s905d-p230.dtb?raw=true
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.61/arm64/defconfig/gcc-8/dtbs/amlogic/meson-gxl-s905d-p230.dtb?raw=true
+  job.file_server_resource: stable/linux-5.10.y/v5.10.61/arm64/defconfig/gcc-8
+  job.build_environment: gcc-8
+
+
+
+
+
+
 
 device_type: meson-gxl-s905d-p230
 
-job_name: mainline-master-v4.16-arm64-defconfig-meson-gxl-s905d-p230.dtb-meson-gxbb-p200-boot
+
+context:
+  extra_kernel_args: console_msg_format=syslog
+
+
+notify:
+  criteria:
+    status: finished
+  callback:
+    url: https://api.kernelci.org/callback/lava/test?lab_name=lab-baylibre&status={STATUS}&status_string={STATUS_STRING}
+    method: POST
+    dataset: all
+    token: kernel-ci-callback
+    content-type: json
+
+
+job_name: Health Check for meson-gxl-s905d-p230 with v5.10.61
 timeouts:
   job:
     minutes: 10
   action:
-   minutes: 5
+   minutes: 10
   actions:
     power-off:
       seconds: 30
-priority: high
+priority: medium
 visibility: public
+
+
+
+
+
 
 actions:
 - deploy:
     timeout:
-       minutes: 10
+      minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.61/arm64/defconfig/gcc-8/kernel/Image?raw=true
       type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/arm64/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2020.05-6-g8983f3b738df/arm64/baseline/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.61/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/mainline/master/v4.16/arm64/defconfig/dtbs/amlogic/meson-gxl-s905d-p230.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.10.y/v5.10.61/arm64/defconfig/gcc-8/dtbs/amlogic/meson-gxl-s905d-p230.dtb?raw=true
     os: oe
+
 
 - boot:
     timeout:
@@ -65,6 +96,53 @@ actions:
     method: u-boot
     commands: ramdisk
     prompts:
-      - 'linaro-test'
-      - 'root@debian:~#'
       - '/ #'
+
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - KERNELCI_LAVA=y /bin/sh /opt/kernelci/dmesg.sh
+      lava-signal: kmsg
+      from: inline
+      name: dmesg
+      path: inline/dmesg.yaml
+
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - export PATH=/opt/bootrr/helpers:$PATH
+            - cd /opt/bootrr && sh helpers/bootrr-auto
+      lava-signal: kmsg
+      from: inline
+      name: bootrr
+      path: inline/bootrr.yaml
+
