@@ -2,36 +2,33 @@
 
 
 metadata:
-  image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.37/arm/multi_v7_defconfig/gcc-10/
   kernel.tree: stable
-  kernel.version: v5.6.12
+  kernel.version: v5.15.37
   kernel.endian: little
-  kernel.defconfig: sunxi_defconfig
-  kernel.defconfig_base: sunxi_defconfig
-  kernel.arch_defconfig: arm-sunxi_defconfig
+  kernel.defconfig: multi_v7_defconfig
+  kernel.defconfig_full: multi_v7_defconfig
   platform.dtb: dtbs/sun8i-a83t-bananapi-m3.dtb
   platform.dtb_short: sun8i-a83t-bananapi-m3.dtb
   platform.fastboot: false
-  platform.name: sun8i-a83t-bananapi-m3
   platform.mach: allwinner
   test.plan: baseline
   test.plan_variant: baseline
-  git.commit: c4bbda210077280030b01adf17d2a5fb39ace668
-  git.describe: v5.6.12
-  git.branch: linux-5.6.y
+  git.commit: 4bf7f350c1638def0caa1835ad92948c15853916
+  git.describe: v5.15.37
+  git.branch: linux-5.15.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
   device.type: sun8i-a83t-bananapi-m3
   job.arch: arm
-  job.name: stable-linux-5.6.y-v5.6.12-arm-sunxi_defconfig-gcc-8-sun8i-a83t-bananapi-m3.dtb-sun8i-a83t-bananapi-m3-baseline
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/zImage?raw=true
+  job.name: stable-linux-5.15.y-v5.15.37-arm-multi_v7_defconfig-gcc-10-sun8i-a83t-bananapi-m3.dtb-sun8i-a83t-bananapi-m3-baseline
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.37/arm/multi_v7_defconfig/gcc-10/kernel/zImage?raw=true
   job.kernel_image: zImage
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-9-g25091c539382/armel/baseline/rootfs.cpio.gz?raw=true
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.37/arm/multi_v7_defconfig/gcc-10/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/buildroot-baseline/20220228.1/armel/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/dtbs/sun8i-a83t-bananapi-m3.dtb?raw=true
-  job.file_server_resource: stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8
-  job.build_environment: gcc-8
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.37/arm/multi_v7_defconfig/gcc-10/dtbs/sun8i-a83t-bananapi-m3.dtb?raw=true
+  job.file_server_resource: stable/linux-5.15.y/v5.15.37/arm/multi_v7_defconfig/gcc-10
+  job.build_environment: gcc-10
 
 
 
@@ -43,12 +40,9 @@ device_type: sun8i-a83t-bananapi-m3
 
 
 context:
-  extra_kernel_args: console_msg_format=syslog
+  extra_kernel_args: console_msg_format=syslog earlycon
 
-
-
-
-job_name: Health Check for sun8i-a83t-bananapi-m3 with v5.6.12
+job_name: Health Check for sun8i-a83t-bananapi-m3 with v5.15.37
 timeouts:
   job:
     minutes: 10
@@ -71,16 +65,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.37/arm/multi_v7_defconfig/gcc-10/kernel/zImage?raw=true
       type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-9-g25091c539382/armel/baseline/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/buildroot-baseline/20220228.1/armel/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.37/arm/multi_v7_defconfig/gcc-10/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/dtbs/sun8i-a83t-bananapi-m3.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.37/arm/multi_v7_defconfig/gcc-10/dtbs/sun8i-a83t-bananapi-m3.dtb?raw=true
     os: oe
 
 
@@ -110,21 +104,8 @@ actions:
             - lava-test-shell
         run:
           steps:
-            - >
-                for level in warn err; do
-                  dmesg --level=$level --notime -x -k > dmesg.$level
-                done
-            - >
-                for level in crit alert emerg; do
-                  dmesg --level=$level --notime -x -k > dmesg.$level
-                  test -s dmesg.$level && res=fail || res=pass
-                  count=$(cat dmesg.$level | wc -l)
-                  lava-test-case $level \
-                    --result $res \
-                    --measurement $count \
-                    --units lines
-                done
-            - cat dmesg.emerg dmesg.alert dmesg.crit dmesg.err dmesg.warn
+            - KERNELCI_LAVA=y /bin/sh /opt/kernelci/dmesg.sh
+      lava-signal: kmsg
       from: inline
       name: dmesg
       path: inline/dmesg.yaml
