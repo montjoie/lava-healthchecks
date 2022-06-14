@@ -2,14 +2,14 @@
 
 
 metadata:
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm64/defconfig/gcc-10/
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm/multi_v7_defconfig/gcc-10/
   kernel.tree: stable
   kernel.version: v5.15.46
   kernel.endian: little
-  kernel.defconfig: defconfig
-  kernel.defconfig_full: defconfig
-  platform.dtb: dtbs/mediatek/mt7622-rfb1.dtb
-  platform.dtb_short: mt7622-rfb1.dtb
+  kernel.defconfig: multi_v7_defconfig
+  kernel.defconfig_full: multi_v7_defconfig
+  platform.dtb: dtbs/mt7629-rfb.dtb
+  platform.dtb_short: mt7629-rfb.dtb
   platform.fastboot: false
   platform.mach: mediatek
   test.plan: baseline
@@ -18,16 +18,16 @@ metadata:
   git.describe: v5.15.46
   git.branch: linux-5.15.y
   git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
-  device.type: mt7622-rfb1
-  job.arch: arm64
-  job.name: stable-linux-5.15.y-v5.15.46-arm64-defconfig-gcc-10-mt7622-rfb1.dtb-mt7622-rfb1-baseline
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm64/defconfig/gcc-10/kernel/Image?raw=true
-  job.kernel_image: Image
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm64/defconfig/gcc-10/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/buildroot-baseline/20220506.0/arm64/rootfs.cpio.gz?raw=true
+  device.type: mt7629-rfb
+  job.arch: arm
+  job.name: stable-linux-5.15.y-v5.15.46-arm-multi_v7_defconfig-gcc-10-mt7629-rfb.dtb-mt7629-rfb-baseline
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm/multi_v7_defconfig/gcc-10/kernel/zImage?raw=true
+  job.kernel_image: zImage
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm/multi_v7_defconfig/gcc-10/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/buildroot-baseline/20220506.0/armel/rootfs.cpio.gz?raw=true
   job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm64/defconfig/gcc-10/dtbs/mediatek/mt7622-rfb1.dtb?raw=true
-  job.file_server_resource: stable/linux-5.15.y/v5.15.46/arm64/defconfig/gcc-10
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm/multi_v7_defconfig/gcc-10/dtbs/mt7629-rfb.dtb?raw=true
+  job.file_server_resource: stable/linux-5.15.y/v5.15.46/arm/multi_v7_defconfig/gcc-10
   job.build_environment: gcc-10
 
 
@@ -36,7 +36,7 @@ metadata:
 
 
 
-device_type: mt7622-rfb1
+device_type: mt7629-rfb
 
 
 context:
@@ -44,7 +44,7 @@ context:
 
 
 
-job_name: Health Check for mt7622-rfb1 with v5.15.46
+job_name: Health Check for mt7629-rfb with v5.15.46
 timeouts:
   job:
     minutes: 10
@@ -68,16 +68,16 @@ actions:
       minutes: 10
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm64/defconfig/gcc-10/kernel/Image?raw=true
-      type: image
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm/multi_v7_defconfig/gcc-10/kernel/zImage?raw=true
+      type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/buildroot-baseline/20220506.0/arm64/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/buildroot-baseline/20220506.0/armel/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm64/defconfig/gcc-10/modules.tar.xz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm/multi_v7_defconfig/gcc-10/modules.tar.xz?raw=true
       compression: xz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm64/defconfig/gcc-10/dtbs/mediatek/mt7622-rfb1.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.15.y/v5.15.46/arm/multi_v7_defconfig/gcc-10/dtbs/mt7629-rfb.dtb?raw=true
     os: oe
 
 
