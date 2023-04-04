@@ -11,8 +11,9 @@ fi
 
 GO=0
 
-STORAGE=http://storage.kernelci.org/
+STORAGE=storage.kernelci.org
 #STORAGE=http://storage.staging.kernelci.org/
+USTORAGE=https://$STORAGE
 
 LAB=localhost
 USER=TOBESET
@@ -88,9 +89,6 @@ da850-lcdk)
 bcm2837-rpi-3-b-32)
 	DEFCONFIG=bcm2835_defconfig
 ;;
-ox820-cloudengines-pogoplug-series-3)
-	DEFCONFIG=oxnas_v6_defconfig
-;;
 esac
 
 DEVICE_TYPE=$1
@@ -139,7 +137,7 @@ BRANCH=master
 #TREE=lee
 #BRANCH=android-3.18-preview
 
-wget -q https://storage.kernelci.org/$TREE/$BRANCH -O laststable || exit $?
+wget -q $USTORAGE/$TREE/$BRANCH -O laststable || exit $?
 
 case $TREE in
 stable)
@@ -167,8 +165,8 @@ mkdir -p buildout
 rm -f buildout/*json
 
 echo "DEBUG: download from $TREE/$BRANCH/$GIT_DESCRIBE/$ARCH/$DEFCONFIG"
-wget -qN https://storage.kernelci.org/$TREE/$BRANCH/$GIT_DESCRIBE/$ARCH/$DEFCONFIG/gcc-10/bmeta.json
-wget -qN https://storage.kernelci.org/$TREE/$BRANCH/$GIT_DESCRIBE/$ARCH/$DEFCONFIG/gcc-10/artifacts.json
+wget -qN $USTORAGE/$TREE/$BRANCH/$GIT_DESCRIBE/$ARCH/$DEFCONFIG/gcc-10/bmeta.json
+wget -qN $USTORAGE/$TREE/$BRANCH/$GIT_DESCRIBE/$ARCH/$DEFCONFIG/gcc-10/artifacts.json
 mv bmeta.json buildout/ || exit $?
 mv artifacts.json buildout/ || exit $?
 
@@ -188,7 +186,7 @@ fi
 
 echo "DEBUG: gen baseline on $LAB with $USER"
 #echo fake
-./kci_test generate --storage $STORAGE \
+./kci_test generate --storage $USTORAGE \
 	--install-path buildout \
 	--lab-json $LAB.json \
 	--lab-config $LAB \
@@ -208,7 +206,7 @@ fi
 #	exit 1
 #fi
 echo "DEBUG: gen fastboot"
-./kci_test generate --storage $STORAGE --lab-config $LAB --plan baseline-fastboot --output $LAB \
+./kci_test generate --storage $USTORAGE --lab-config $LAB --plan baseline-fastboot --output $LAB \
 	--install-path buildout \
 	--lab-json $LAB.json \
 	--user $USER \
@@ -218,7 +216,7 @@ if [ $? -ne 0 ];then
 fi
 echo "DEBUG: gen qemu for $LAB"
 PLAN=baseline_qemu
-./kci_test generate --storage $STORAGE --lab-config $LAB --plan $PLAN --output $LAB \
+./kci_test generate --storage $USTORAGE --lab-config $LAB --plan $PLAN --output $LAB \
 	--install-path buildout \
 	--lab-json $LAB.json \
 	--user $USER \
@@ -228,7 +226,7 @@ if [ $? -ne 0 ];then
 fi
 echo "DEBUG: gen qemu docker for $LAB"
 PLAN=baseline-qemu-docker
-./kci_test generate --storage $STORAGE --lab-config $LAB --plan $PLAN --output $LAB \
+./kci_test generate --storage $USTORAGE --lab-config $LAB --plan $PLAN --output $LAB \
 	--install-path buildout \
 	--lab-json $LAB.json \
 	--user $USER \
@@ -285,7 +283,7 @@ if [ ! -e ../lava-healthchecks-binary ];then
 fi
 
 NOACT=0
-grep storage.kernelci.org $HOME/kernelci-core/submit/* |grep -iE 'url' |\
+grep $STORAGE $HOME/kernelci-core/submit/* |grep -iE 'url' |\
 	grep -v '/$' |\
 	sed 's,^.*http,http,' |\
 	sort | uniq |
@@ -305,7 +303,7 @@ do
 	cd $OLDPATH
 done
 
-sed -i 's,storage.kernelci.org,github.com/montjoie/lava-healthchecks-binary/blob/master,' $HOME/kernelci-core/submit/*
+sed -i "s,$STORAGE,github.com/montjoie/lava-healthchecks-binary/blob/master," $HOME/kernelci-core/submit/*
 sed -i 's,rootfs.cpio.gz$,rootfs.cpio.gz?raw=true,' $HOME/kernelci-core/submit/*
 sed -i 's,\(http.*dtb\)$,\1?raw=true,' $HOME/kernelci-core/submit/*
 sed -i 's,\(http.*Image\)$,\1?raw=true,' $HOME/kernelci-core/submit/*
