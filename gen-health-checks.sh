@@ -178,8 +178,7 @@ CALLBACK="--callback-type kernelci \
 CALLBACK=""
 
 echo "DEBUG: get_lab_info for $LAB"
-./kci_test get_lab_info --user $USER --lab-config $LAB --lab-token $TOKEN --lab-json $LAB.json
-#./kci_test get_lab_info --user $USER --runtime-config $LAB --runtime-token $TOKEN --runtime-json $LAB.json
+./kci_test get_lab_info --user $USER --runtime-config $LAB --runtime-token $TOKEN --runtime-json $LAB.json
 if [ $? -ne 0 ];then
 	exit 1
 fi
@@ -188,49 +187,49 @@ echo "DEBUG: gen baseline on $LAB with $USER"
 #echo fake
 ./kci_test generate --storage $USTORAGE \
 	--install-path buildout \
-	--lab-json $LAB.json \
-	--lab-config $LAB \
+	--runtime-json $LAB.json \
+	--runtime-config $LAB \
 	--plan baseline \
 	--output $LAB \
 	$CALLBACK \
 	--user $USER \
-	--lab-token $TOKEN $*
+	--runtime-token $TOKEN $*
 if [ $? -ne 0 ];then
 	exit 1
 fi
 #echo "DEBUG: gen crypto"
-#./kci_test generate --storage $STORAGE --bmeta-json bmeta.json --dtbs-json dtbs.json --lab-config $LAB --plan crypto --output $LAB \
+#./kci_test generate --storage $STORAGE --bmeta-json bmeta.json --dtbs-json dtbs.json --runtime-config $LAB --plan crypto --output $LAB \
 #	--user $USER \
-#	--lab-token $TOKEN $*
+#	--runtime-token $TOKEN $*
 #if [ $? -ne 0 ];then
 #	exit 1
 #fi
 echo "DEBUG: gen fastboot"
-./kci_test generate --storage $USTORAGE --lab-config $LAB --plan baseline-fastboot --output $LAB \
+./kci_test generate --storage $USTORAGE --runtime-config $LAB --plan baseline-fastboot --output $LAB \
 	--install-path buildout \
-	--lab-json $LAB.json \
+	--runtime-json $LAB.json \
 	--user $USER \
-	--lab-token $TOKEN $*
+	--runtime-token $TOKEN $*
 if [ $? -ne 0 ];then
 	exit 1
 fi
 echo "DEBUG: gen qemu for $LAB"
 PLAN=baseline_qemu
-./kci_test generate --storage $USTORAGE --lab-config $LAB --plan $PLAN --output $LAB \
+./kci_test generate --storage $USTORAGE --runtime-config $LAB --plan $PLAN --output $LAB \
 	--install-path buildout \
-	--lab-json $LAB.json \
+	--runtime-json $LAB.json \
 	--user $USER \
-	--lab-token $TOKEN $*
+	--runtime-token $TOKEN $*
 if [ $? -ne 0 ];then
 	exit 1
 fi
 echo "DEBUG: gen qemu docker for $LAB"
 PLAN=baseline-qemu-docker
-./kci_test generate --storage $USTORAGE --lab-config $LAB --plan $PLAN --output $LAB \
+./kci_test generate --storage $USTORAGE --runtime-config $LAB --plan $PLAN --output $LAB \
 	--install-path buildout \
-	--lab-json $LAB.json \
+	--runtime-json $LAB.json \
 	--user $USER \
-	--lab-token $TOKEN $*
+	--runtime-token $TOKEN $*
 if [ $? -ne 0 ];then
 	exit 1
 fi
@@ -261,7 +260,7 @@ cp $LAB/*$DEVICE_TYPE*$FPLAN* $HOME/kernelci-core/submit/
 if [ $GO -eq 1 ];then
 	for i in $(seq 1 1)
 	do
-		./kci_test submit --lab-config $LAB --user $USER --lab-token $TOKEN --jobs $HOME/kernelci-core/submit/*yaml > jobid
+		./kci_test submit --runtime-config $LAB --user $USER --runtime-token $TOKEN --jobs $HOME/kernelci-core/submit/*yaml > jobid
 		cat jobid
 		lavacli --uri $LABRPC jobs wait $(cut -d' ' -f1 jobid)
 		lavacli --uri $LABRPC jobs show $(cut -d' ' -f1 jobid) > job-result
