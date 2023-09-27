@@ -1,0 +1,140 @@
+
+
+
+metadata:
+  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20230927/arm64/defconfig/gcc-10/
+  kernel.tree: next
+  kernel.version: next-20230927
+  kernel.endian: little
+  kernel.defconfig: defconfig
+  kernel.defconfig_full: defconfig
+  platform.dtb: dtbs/rockchip/rk3588-rock-5b.dtb
+  platform.dtb_short: rk3588-rock-5b.dtb
+  platform.fastboot: false
+  platform.mach: rockchip
+  test.plan: baseline
+  test.plan_variant: baseline
+  git.commit: 18030226a48de1fbfabf4ae16aaa2695a484254f
+  git.describe: next-20230927
+  git.branch: master
+  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+  device.type: rk3588-rock-5b
+  job.arch: arm64
+  job.name: next-master-next-20230927-arm64-defconfig-gcc-10-rk3588-rock-5b-baseline
+  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20230927/arm64/defconfig/gcc-10/kernel/Image?raw=true
+  job.kernel_image: Image
+  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20230927/arm64/defconfig/gcc-10/modules.tar.xz?raw=true
+  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/buildroot-baseline/20230623.0/arm64/rootfs.cpio.gz?raw=true
+  job.nfsrootfs_url: None
+  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20230927/arm64/defconfig/gcc-10/dtbs/rockchip/rk3588-rock-5b.dtb?raw=true
+  job.file_server_resource: next/master/next-20230927/arm64/defconfig/gcc-10
+  job.build_environment: gcc-10
+
+
+
+
+
+
+
+device_type: rk3588-rock-5b
+
+
+context:
+  extra_kernel_args: console_msg_format=syslog earlycon deferred_probe_timeout=60
+
+
+
+job_name: Health Check for rk3588-rock-5b with next-20230927
+timeouts:
+  job:
+    minutes: 10
+  action:
+   minutes: 10
+  actions:
+    power-off:
+      seconds: 30
+priority: 90
+visibility: public
+
+
+
+
+
+
+actions:
+- deploy:
+    timeout:
+      minutes: 10
+    to: tftp
+    kernel:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20230927/arm64/defconfig/gcc-10/kernel/Image?raw=true
+      type: image
+    ramdisk:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/buildroot-baseline/20230623.0/arm64/rootfs.cpio.gz?raw=true
+      compression: gz
+    modules:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20230927/arm64/defconfig/gcc-10/modules.tar.xz?raw=true
+      compression: xz
+    dtb:
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20230927/arm64/defconfig/gcc-10/dtbs/rockchip/rk3588-rock-5b.dtb?raw=true
+    os: oe
+
+
+- boot:
+    timeout:
+      minutes: 5
+    method: u-boot
+    commands: ramdisk
+    prompts:
+      - '/ #'
+
+
+- test:
+    timeout:
+      minutes: 1
+    failure_retry: 5
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - KERNELCI_LAVA=y /bin/sh /opt/kernelci/dmesg.sh
+      lava-signal: kmsg
+      from: inline
+      name: dmesg
+      path: inline/dmesg.yaml
+
+- test:
+    timeout:
+      minutes: 1
+    failure_retry: 5
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: "baseline test plan"
+          os:
+            - debian
+          scope:
+            - functional
+          environment:
+            - lava-test-shell
+        run:
+          steps:
+            - export PATH=/opt/bootrr/libexec/bootrr/helpers:$PATH
+            - cd /opt/bootrr/libexec/bootrr && sh helpers/bootrr-auto
+      lava-signal: kmsg
+      from: inline
+      name: bootrr
+      path: inline/bootrr.yaml
+
