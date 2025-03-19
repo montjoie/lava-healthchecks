@@ -1,98 +1,69 @@
-
-
-
 metadata:
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20221205/riscv/defconfig/gcc-10/
-  kernel.tree: next
-  kernel.version: next-20221205
+  image.type: montjoie-ci
+  kernel.tree: mainline
+  kernel.version: v6.13.7
   kernel.endian: little
   kernel.defconfig: defconfig
-  kernel.defconfig_full: defconfig
-  platform.dtb: dtbs/starfive/jh7100-starfive-visionfive-v1.dtb
-  platform.dtb_short: jh7100-starfive-visionfive-v1.dtb
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: riscv-montjoie_defconfig
+  platform.dtb: starfive/jh7100-starfive-visionfive-v1.dtb
+  platform.dtb_short: starfive/jh7100-starfive-visionfive-v1.dtb
   platform.fastboot: false
-  platform.mach: starfive
-  test.plan: baseline
-  test.plan_variant: baseline
-  git.commit: ee9bda616d36d2dc864aa294c2656fad88c9efa0
-  git.describe: next-20221205
-  git.branch: master
-  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+  platform.name: jh7100-starfive-visionfive-v1
+  platform.mach: riscv
+  test.plan: boot
+  test.plan_variant: hc
+  git.commit: 648e04a805652f513af04b47035cde896addf9b0
+  git.describe: v6.13.7
+  git.branch: HEAD
+  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
   device.type: jh7100-starfive-visionfive-v1
   job.arch: riscv
-  job.name: next-master-next-20221205-riscv-defconfig-gcc-10-jh7100-starfive-visionfive-v1-baseline
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20221205/riscv/defconfig/gcc-10/kernel/Image?raw=true
   job.kernel_image: Image
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20221205/riscv/defconfig/gcc-10/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/buildroot-baseline/20221125.0/riscv/rootfs.cpio.gz?raw=true
-  job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20221205/riscv/defconfig/gcc-10/dtbs/starfive/jh7100-starfive-visionfive-v1.dtb?raw=true
-  job.file_server_resource: next/master/next-20221205/riscv/defconfig/gcc-10
-  job.build_environment: gcc-10
-
-
-
-
-
-
-
+  job.build_environment: Bootlin_RISCV
+  build.overlays: None
+  build.toolchain: Bootlin_RISCV
+  job.file_server_resource: riscv-default-defconfig+Bootlin_RISCV+None/jh7100-starfive-visionfive-v1
 device_type: jh7100-starfive-visionfive-v1
-
-
 context:
-  extra_kernel_args: console_msg_format=syslog earlycon ip=dhcp
-
-
-
-job_name: Health Check for jh7100-starfive-visionfive-v1 with next-20221205
+  extra_kernel_args: ip=dhcp
+job_name: Health Check for jh7100-starfive-visionfive-v1 with v6.13.7
 timeouts:
   job:
-    minutes: 10
+    minutes: 5
   action:
-   minutes: 10
+    minutes: 5
   actions:
     power-off:
       seconds: 30
-  queue:
-    hours: 24
-    
-
-priority: 50
+priority: high
 visibility: public
-
-
-
-
-
-
 actions:
 - deploy:
     timeout:
-      minutes: 10
+      minutes: 5
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20221205/riscv/defconfig/gcc-10/kernel/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/riscv/default/defconfig/v6.13.7/Image?raw=true
       type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/buildroot-baseline/20221125.0/riscv/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/rootfs/riscv/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20221205/riscv/defconfig/gcc-10/modules.tar.xz?raw=true
-      compression: xz
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/riscv/default/defconfig/v6.13.7/modules.tar.gz?raw=true
+      compression: gz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/next/master/next-20221205/riscv/defconfig/gcc-10/dtbs/starfive/jh7100-starfive-visionfive-v1.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/riscv/default/defconfig/v6.13.7/dts/starfive/jh7100-starfive-visionfive-v1.dtb?raw=true
     os: oe
-
-
 - boot:
     timeout:
       minutes: 5
     method: u-boot
     commands: ramdisk
     prompts:
-      - '/ #'
-
-
+    - '/ #'
+    - '~ #'
+    - sh-5.1#
 - test:
     timeout:
       minutes: 1
@@ -101,42 +72,17 @@ actions:
         metadata:
           format: Lava-Test Test Definition 1.0
           name: baseline
-          description: "baseline test plan"
+          description: Minimal HC test
           os:
-            - debian
+          - debian
           scope:
-            - functional
+          - functional
           environment:
-            - lava-test-shell
+          - lava-test-shell
         run:
           steps:
-            - KERNELCI_LAVA=y /bin/sh /opt/kernelci/dmesg.sh
+          - ip a
       lava-signal: kmsg
       from: inline
-      name: dmesg
-      path: inline/dmesg.yaml
-
-- test:
-    timeout:
-      minutes: 1
-    definitions:
-    - repository:
-        metadata:
-          format: Lava-Test Test Definition 1.0
-          name: baseline
-          description: "baseline test plan"
-          os:
-            - debian
-          scope:
-            - functional
-          environment:
-            - lava-test-shell
-        run:
-          steps:
-            - export PATH=/opt/bootrr/helpers:$PATH
-            - cd /opt/bootrr && sh helpers/bootrr-auto
-      lava-signal: kmsg
-      from: inline
-      name: bootrr
-      path: inline/bootrr.yaml
-
+      name: healthcheck
+      path: inline/hc.yam
