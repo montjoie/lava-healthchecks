@@ -1,98 +1,69 @@
-
-
-
 metadata:
-  image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/
-  kernel.tree: stable
-  kernel.version: v5.6.12
+  image.type: montjoie-ci
+  kernel.tree: mainline
+  kernel.version: v6.13.7
   kernel.endian: little
   kernel.defconfig: sunxi_defconfig
   kernel.defconfig_base: sunxi_defconfig
-  kernel.arch_defconfig: arm-sunxi_defconfig
-  platform.dtb: dtbs/sun8i-a33-olinuxino.dtb
-  platform.dtb_short: sun8i-a33-olinuxino.dtb
+  kernel.arch_defconfig: arm-montjoie_defconfig
+  platform.dtb: allwinner/sun8i-a33-olinuxino.dtb
+  platform.dtb_short: allwinner/sun8i-a33-olinuxino.dtb
   platform.fastboot: false
   platform.name: sun8i-a33-olinuxino
-  platform.mach: allwinner
-  test.plan: baseline
-  test.plan_variant: baseline
-  git.commit: c4bbda210077280030b01adf17d2a5fb39ace668
-  git.describe: v5.6.12
-  git.branch: linux-5.6.y
-  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  platform.mach: sunxi
+  test.plan: boot
+  test.plan_variant: hc
+  git.commit: 648e04a805652f513af04b47035cde896addf9b0
+  git.describe: v6.13.7
+  git.branch: HEAD
+  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
   device.type: sun8i-a33-olinuxino
   job.arch: arm
-  job.name: stable-linux-5.6.y-v5.6.12-arm-sunxi_defconfig-gcc-8-sun8i-a33-olinuxino.dtb-sun8i-a33-olinuxino-baseline
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/zImage?raw=true
   job.kernel_image: zImage
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-9-g25091c539382/armel/baseline/rootfs.cpio.gz?raw=true
-  job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/dtbs/sun8i-a33-olinuxino.dtb?raw=true
-  job.file_server_resource: stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8
-  job.build_environment: gcc-8
-
-
-
-
-
-
-
+  job.build_environment: Gentoo_armv7a-hf
+  build.overlays: None
+  build.toolchain: Gentoo_armv7a-hf
+  job.file_server_resource: arm-sunxi-defconfig+Gentoo_armv7a-hf+None/sun8i-a33-olinuxino
 device_type: sun8i-a33-olinuxino
-
-
 context:
-  extra_kernel_args: console_msg_format=syslog
-
-
-
-
-job_name: Health Check for sun8i-a33-olinuxino with v5.6.12
+  extra_kernel_args: ip=dhcp
+job_name: Health Check for sun8i-a33-olinuxino with v6.13.7
 timeouts:
   job:
-    minutes: 10
+    minutes: 5
   action:
-   minutes: 10
+    minutes: 5
   actions:
     power-off:
       seconds: 30
-priority: medium
+priority: high
 visibility: public
-
-
-
-
-
-
 actions:
 - deploy:
     timeout:
-      minutes: 10
+      minutes: 5
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/sunxi/defconfig/v6.13.7/zImage?raw=true
       type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-9-g25091c539382/armel/baseline/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/rootfs/armel/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/modules.tar.xz?raw=true
-      compression: xz
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/sunxi/defconfig/v6.13.7/modules.tar.gz?raw=true
+      compression: gz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm/sunxi_defconfig/gcc-8/dtbs/sun8i-a33-olinuxino.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/sunxi/defconfig/v6.13.7/dts/allwinner/sun8i-a33-olinuxino.dtb?raw=true
     os: oe
-
-
 - boot:
     timeout:
       minutes: 5
     method: u-boot
     commands: ramdisk
     prompts:
-      - '/ #'
-
-
+    - '/ #'
+    - '~ #'
+    - sh-5.1#
 - test:
     timeout:
       minutes: 1
@@ -101,55 +72,17 @@ actions:
         metadata:
           format: Lava-Test Test Definition 1.0
           name: baseline
-          description: "baseline test plan"
+          description: Minimal HC test
           os:
-            - debian
+          - debian
           scope:
-            - functional
+          - functional
           environment:
-            - lava-test-shell
+          - lava-test-shell
         run:
           steps:
-            - >
-                for level in warn err; do
-                  dmesg --level=$level --notime -x -k > dmesg.$level
-                done
-            - >
-                for level in crit alert emerg; do
-                  dmesg --level=$level --notime -x -k > dmesg.$level
-                  test -s dmesg.$level && res=fail || res=pass
-                  count=$(cat dmesg.$level | wc -l)
-                  lava-test-case $level \
-                    --result $res \
-                    --measurement $count \
-                    --units lines
-                done
-            - cat dmesg.emerg dmesg.alert dmesg.crit dmesg.err dmesg.warn
-      from: inline
-      name: dmesg
-      path: inline/dmesg.yaml
-
-- test:
-    timeout:
-      minutes: 1
-    definitions:
-    - repository:
-        metadata:
-          format: Lava-Test Test Definition 1.0
-          name: baseline
-          description: "baseline test plan"
-          os:
-            - debian
-          scope:
-            - functional
-          environment:
-            - lava-test-shell
-        run:
-          steps:
-            - export PATH=/opt/bootrr/helpers:$PATH
-            - cd /opt/bootrr && sh helpers/bootrr-auto
+          - ip a
       lava-signal: kmsg
       from: inline
-      name: bootrr
-      path: inline/bootrr.yaml
-
+      name: healthcheck
+      path: inline/hc.yam

@@ -1,40 +1,91 @@
+metadata:
+  image.type: montjoie-ci
+  kernel.tree: mainline
+  kernel.version: v6.13.7
+  kernel.endian: little
+  kernel.defconfig: tegra_defconfig
+  kernel.defconfig_base: tegra_defconfig
+  kernel.arch_defconfig: arm-montjoie_defconfig
+  platform.dtb: nvidia/tegra124-jetson-tk1.dtb
+  platform.dtb_short: nvidia/tegra124-jetson-tk1.dtb
+  platform.fastboot: false
+  platform.name: jetson-tk1
+  platform.mach: tegra
+  test.plan: boot
+  test.plan_variant: hc
+  git.commit: 648e04a805652f513af04b47035cde896addf9b0
+  git.describe: v6.13.7
+  git.branch: HEAD
+  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+  device.type: jetson-tk1
+  job.arch: arm
+  job.kernel_image: zImage
+  job.build_environment: Gentoo_armv7a-hf
+  build.overlays: None
+  build.toolchain: Gentoo_armv7a-hf
+  job.file_server_resource: arm-tegra-defconfig+Gentoo_armv7a-hf+None/jetson-tk1
 device_type: jetson-tk1
-
-job_name: Health test for jetson-tk1 with v4.17.14
+context:
+  extra_kernel_args: ip=dhcp
+job_name: Health Check for jetson-tk1 with v6.13.7
 timeouts:
   job:
-    minutes: 10
+    minutes: 5
   action:
-   minutes: 5
+    minutes: 5
   actions:
     power-off:
       seconds: 30
 priority: high
 visibility: public
-
 actions:
 - deploy:
     timeout:
-       minutes: 10
+      minutes: 5
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.17.y/v4.17.14/arm/multi_v7_defconfig/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/tegra/defconfig/v6.13.7/zImage?raw=true
       type: zimage
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/armel/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/rootfs/armel/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.17.y/v4.17.14/arm/multi_v7_defconfig/modules.tar.xz?raw=true
-      compression: xz
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/tegra/defconfig/v6.13.7/modules.tar.gz?raw=true
+      compression: gz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-4.17.y/v4.17.14/arm/multi_v7_defconfig/dtbs/tegra124-jetson-tk1.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/tegra/defconfig/v6.13.7/dts/nvidia/tegra124-jetson-tk1.dtb?raw=true
     os: oe
-
 - boot:
     timeout:
       minutes: 5
     method: u-boot
     commands: ramdisk
     prompts:
-      - 'root@debian:~#'
-      - '/ #'
+    - '/ #'
+    - '~ #'
+    - sh-5.1#
+- test:
+    timeout:
+      minutes: 1
+    definitions:
+    - repository:
+        metadata:
+          format: Lava-Test Test Definition 1.0
+          name: baseline
+          description: Minimal HC test
+          os:
+          - debian
+          scope:
+          - functional
+          environment:
+          - lava-test-shell
+        run:
+          steps:
+          - ip a
+          - "for level in warn err; do\n  dmesg --level=$level --notime -x -k > dmesg.$level\ndone\n"
+          - "for level in crit alert emerg; do\n  dmesg --level=$level --notime -x -k > dmesg.$level\n  test -s dmesg.$level && res=fail || res=pass\n  count=$(cat dmesg.$level | wc -l)\n  lava-test-case $level \\\n    --result $res \\\n    --measurement $count \\\n    --units lines\ndone\n"
+          - cat dmesg.emerg dmesg.alert dmesg.crit dmesg.err dmesg.warn
+      lava-signal: kmsg
+      from: inline
+      name: healthcheck
+      path: inline/hc.yam

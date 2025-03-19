@@ -3,31 +3,31 @@ metadata:
   kernel.tree: mainline
   kernel.version: v6.13.7
   kernel.endian: little
-  kernel.defconfig: sunxi_defconfig
-  kernel.defconfig_base: sunxi_defconfig
-  kernel.arch_defconfig: arm-montjoie_defconfig
-  platform.dtb: allwinner/sun8i-a83t-bananapi-m3.dtb
-  platform.dtb_short: allwinner/sun8i-a83t-bananapi-m3.dtb
+  kernel.defconfig: defconfig
+  kernel.defconfig_base: defconfig
+  kernel.arch_defconfig: riscv-montjoie_defconfig
+  platform.dtb: allwinner/sun20i-d1-nezha.dtb
+  platform.dtb_short: allwinner/sun20i-d1-nezha.dtb
   platform.fastboot: false
-  platform.name: sun8i-a83t-bananapi-m3
-  platform.mach: sunxi
+  platform.name: sun20i-d1-nezha
+  platform.mach: riscv
   test.plan: boot
   test.plan_variant: hc
   git.commit: 648e04a805652f513af04b47035cde896addf9b0
   git.describe: v6.13.7
   git.branch: HEAD
   git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-  device.type: sun8i-a83t-bananapi-m3
-  job.arch: arm
-  job.kernel_image: zImage
-  job.build_environment: Gentoo_armv7a-hf
+  device.type: sun20i-d1-nezha
+  job.arch: riscv
+  job.kernel_image: Image
+  job.build_environment: Bootlin_RISCV
   build.overlays: None
-  build.toolchain: Gentoo_armv7a-hf
-  job.file_server_resource: arm-sunxi-defconfig+Gentoo_armv7a-hf+None/sun8i-a83t-bananapi-m3
-device_type: sun8i-a83t-bananapi-m3
+  build.toolchain: Bootlin_RISCV
+  job.file_server_resource: riscv-default-defconfig+Bootlin_RISCV+None/sun20i-d1-nezha
+device_type: sun20i-d1-nezha
 context:
   extra_kernel_args: ip=dhcp
-job_name: Health Check for sun8i-a83t-bananapi-m3 with v6.13.7
+job_name: Health Check for sun20i-d1-nezha with v6.13.7
 timeouts:
   job:
     minutes: 5
@@ -44,16 +44,16 @@ actions:
       minutes: 5
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/sunxi/defconfig/v6.13.7/zImage?raw=true
-      type: zimage
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/riscv/default/defconfig/v6.13.7/Image?raw=true
+      type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/rootfs/armel/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/rootfs/riscv/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/sunxi/defconfig/v6.13.7/modules.tar.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/riscv/default/defconfig/v6.13.7/modules.tar.gz?raw=true
       compression: gz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/sunxi/defconfig/v6.13.7/dts/allwinner/sun8i-a83t-bananapi-m3.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/riscv/default/defconfig/v6.13.7/dts/allwinner/sun20i-d1-nezha.dtb?raw=true
     os: oe
 - boot:
     timeout:
