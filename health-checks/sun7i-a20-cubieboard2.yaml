@@ -1,7 +1,7 @@
 metadata:
   image.type: montjoie-ci
   kernel.tree: mainline
-  kernel.version: v6.13.7
+  kernel.version: v6.13.9
   kernel.endian: little
   kernel.defconfig: sunxi_defconfig
   kernel.defconfig_base: sunxi_defconfig
@@ -13,8 +13,8 @@ metadata:
   platform.mach: sunxi
   test.plan: boot
   test.plan_variant: hc
-  git.commit: 648e04a805652f513af04b47035cde896addf9b0
-  git.describe: v6.13.7
+  git.commit: 0699da87b871db5ebcf7d91b3bb3e86b790fd981
+  git.describe: v6.13.9
   git.branch: HEAD
   git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
   device.type: sun7i-a20-cubieboard2
@@ -27,7 +27,7 @@ metadata:
 device_type: sun7i-a20-cubieboard2
 context:
   extra_kernel_args: ip=dhcp
-job_name: Health Check for sun7i-a20-cubieboard2 with v6.13.7
+job_name: Health Check for sun7i-a20-cubieboard2 with v6.13.9
 timeouts:
   job:
     minutes: 5
@@ -44,16 +44,16 @@ actions:
       minutes: 5
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/sunxi/defconfig/v6.13.7/zImage?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/sunxi/defconfig/v6.13.9/zImage?raw=true
       type: zimage
     ramdisk:
       url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/rootfs/armel/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/sunxi/defconfig/v6.13.7/modules.tar.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/sunxi/defconfig/v6.13.9/modules.tar.gz?raw=true
       compression: gz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/sunxi/defconfig/v6.13.7/dts/allwinner/sun7i-a20-cubieboard2.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm/sunxi/defconfig/v6.13.9/dts/allwinner/sun7i-a20-cubieboard2.dtb?raw=true
     os: oe
 - boot:
     timeout:
@@ -81,7 +81,11 @@ actions:
           - lava-test-shell
         run:
           steps:
+          - sleep 30
           - ip a
+          - "for level in warn err; do\n  dmesg --level=$level --notime -x -k > dmesg.$level\ndone\n"
+          - "for level in crit alert emerg; do\n  dmesg --level=$level --notime -x -k > dmesg.$level\n  test -s dmesg.$level && res=fail || res=pass\n  count=$(cat dmesg.$level | wc -l)\n  lava-test-case $level \\\n    --result $res \\\n    --measurement $count \\\n    --units lines\ndone\n"
+          - cat dmesg.emerg dmesg.alert dmesg.crit dmesg.err dmesg.warn
       lava-signal: kmsg
       from: inline
       name: healthcheck

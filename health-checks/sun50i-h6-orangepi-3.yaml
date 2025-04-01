@@ -1,97 +1,69 @@
-
-
-
 metadata:
-  image.type: 'kernel-ci'
-  image.url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/
-  kernel.tree: stable
-  kernel.version: v5.6.12
+  image.type: montjoie-ci
+  kernel.tree: mainline
+  kernel.version: v6.13.9
   kernel.endian: little
   kernel.defconfig: defconfig
   kernel.defconfig_base: defconfig
-  kernel.arch_defconfig: arm64-defconfig
-  platform.dtb: dtbs/allwinner/sun50i-h6-orangepi-3.dtb
-  platform.dtb_short: sun50i-h6-orangepi-3.dtb
+  kernel.arch_defconfig: arm64-montjoie_defconfig
+  platform.dtb: allwinner/sun50i-h6-orangepi-3.dtb
+  platform.dtb_short: allwinner/sun50i-h6-orangepi-3.dtb
   platform.fastboot: false
   platform.name: sun50i-h6-orangepi-3
-  platform.mach: allwinner
-  test.plan: baseline
-  test.plan_variant: baseline
-  git.commit: c4bbda210077280030b01adf17d2a5fb39ace668
-  git.describe: v5.6.12
-  git.branch: linux-5.6.y
-  git.url: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  platform.mach: sunxi
+  test.plan: boot
+  test.plan_variant: hc
+  git.commit: 0699da87b871db5ebcf7d91b3bb3e86b790fd981
+  git.describe: v6.13.9
+  git.branch: HEAD
+  git.url: http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
   device.type: sun50i-h6-orangepi-3
   job.arch: arm64
-  job.name: stable-linux-5.6.y-v5.6.12-arm64-defconfig-gcc-8-sun50i-h6-orangepi-3.dtb-sun50i-h6-orangepi-3-baseline
-  job.kernel_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/Image?raw=true
   job.kernel_image: Image
-  job.modules_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
-  job.initrd_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-9-g25091c539382/arm64/baseline/rootfs.cpio.gz?raw=true
-  job.nfsrootfs_url: None
-  job.dtb_url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/dtbs/allwinner/sun50i-h6-orangepi-3.dtb?raw=true
-  job.file_server_resource: stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8
-  job.build_environment: gcc-8
-
-
-
-
-
-
-
+  job.build_environment: Gentoo_crossdev_ARM64
+  build.overlays: None
+  build.toolchain: Gentoo_crossdev_ARM64
+  job.file_server_resource: arm64-default-defconfig+Gentoo_crossdev_ARM64+None/sun50i-h6-orangepi-3
 device_type: sun50i-h6-orangepi-3
-
-
 context:
-  extra_kernel_args: console_msg_format=syslog
-
-
-
-job_name: Health Check for sun50i-h6-orangepi-3 with v5.6.12
+  extra_kernel_args: ip=dhcp
+job_name: Health Check for sun50i-h6-orangepi-3 with v6.13.9
 timeouts:
   job:
-    minutes: 10
+    minutes: 5
   action:
-   minutes: 10
+    minutes: 5
   actions:
     power-off:
       seconds: 30
-priority: medium
+priority: high
 visibility: public
-
-
-
-
-
-
 actions:
 - deploy:
     timeout:
-      minutes: 10
+      minutes: 5
     to: tftp
     kernel:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/Image?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm64/default/defconfig/v6.13.9/Image?raw=true
       type: image
     ramdisk:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/images/rootfs/buildroot/kci-2019.02-9-g25091c539382/arm64/baseline/rootfs.cpio.gz?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/rootfs/arm64/rootfs.cpio.gz?raw=true
       compression: gz
     modules:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/modules.tar.xz?raw=true
-      compression: xz
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm64/default/defconfig/v6.13.9/modules.tar.gz?raw=true
+      compression: gz
     dtb:
-      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/linux-5.6.y/v5.6.12/arm64/defconfig/gcc-8/dtbs/allwinner/sun50i-h6-orangepi-3.dtb?raw=true
+      url: https://github.com/montjoie/lava-healthchecks-binary/blob/master/stable/arm64/default/defconfig/v6.13.9/dts/allwinner/sun50i-h6-orangepi-3.dtb?raw=true
     os: oe
-
-
 - boot:
     timeout:
       minutes: 5
     method: u-boot
     commands: ramdisk
     prompts:
-      - '/ #'
-
-
+    - '/ #'
+    - '~ #'
+    - sh-5.1#
 - test:
     timeout:
       minutes: 1
@@ -100,55 +72,21 @@ actions:
         metadata:
           format: Lava-Test Test Definition 1.0
           name: baseline
-          description: "baseline test plan"
+          description: Minimal HC test
           os:
-            - debian
+          - debian
           scope:
-            - functional
+          - functional
           environment:
-            - lava-test-shell
+          - lava-test-shell
         run:
           steps:
-            - >
-                for level in warn err; do
-                  dmesg --level=$level --notime -x -k > dmesg.$level
-                done
-            - >
-                for level in crit alert emerg; do
-                  dmesg --level=$level --notime -x -k > dmesg.$level
-                  test -s dmesg.$level && res=fail || res=pass
-                  count=$(cat dmesg.$level | wc -l)
-                  lava-test-case $level \
-                    --result $res \
-                    --measurement $count \
-                    --units lines
-                done
-            - cat dmesg.emerg dmesg.alert dmesg.crit dmesg.err dmesg.warn
-      from: inline
-      name: dmesg
-      path: inline/dmesg.yaml
-
-- test:
-    timeout:
-      minutes: 1
-    definitions:
-    - repository:
-        metadata:
-          format: Lava-Test Test Definition 1.0
-          name: baseline
-          description: "baseline test plan"
-          os:
-            - debian
-          scope:
-            - functional
-          environment:
-            - lava-test-shell
-        run:
-          steps:
-            - export PATH=/opt/bootrr/helpers:$PATH
-            - cd /opt/bootrr && sh helpers/bootrr-auto
+          - sleep 30
+          - ip a
+          - "for level in warn err; do\n  dmesg --level=$level --notime -x -k > dmesg.$level\ndone\n"
+          - "for level in crit alert emerg; do\n  dmesg --level=$level --notime -x -k > dmesg.$level\n  test -s dmesg.$level && res=fail || res=pass\n  count=$(cat dmesg.$level | wc -l)\n  lava-test-case $level \\\n    --result $res \\\n    --measurement $count \\\n    --units lines\ndone\n"
+          - cat dmesg.emerg dmesg.alert dmesg.crit dmesg.err dmesg.warn
       lava-signal: kmsg
       from: inline
-      name: bootrr
-      path: inline/bootrr.yaml
-
+      name: healthcheck
+      path: inline/hc.yam
